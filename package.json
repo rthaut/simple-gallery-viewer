@@ -1,0 +1,17 @@
+{
+  "name": "simple-gallery-viewer",
+  "title": "Simple Gallery Viewer",
+  "version": "1.0.0",
+  "description": "A configurable viewer for image galleries",
+  "author": "Ryan Thaut <rthaut@gmail.com> (http://ryanthaut.com)",
+  "homepage": "https://github.com/rthaut/simple-gallery-viewer",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rthaut/simple-gallery-viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rthaut/simple-gallery-viewer/issues"
+  }
+}
