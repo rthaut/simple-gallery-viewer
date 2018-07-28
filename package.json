@@ -7,6 +7,14 @@
   "homepage": "https://github.com/rthaut/simple-gallery-viewer",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build": "gulp build",
+    "debug": "gulp debug",
+    "package": "gulp package",
+    "firefox:lint": "web-ext lint --source-dir=./dist/firefox",
+    "firefox:build": "web-ext build --source-dir=./dist/firefox --firefox=firefox",
+    "firefox:start": "web-ext run --source-dir=./dist/firefox"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rthaut/simple-gallery-viewer.git"
