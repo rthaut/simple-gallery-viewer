@@ -1,0 +1,19 @@
+{
+    "author": "<%= pkg.author %>",
+  
+    "minimum_edge_version": "33.14281.1000.0",
+  
+    "permissions": [
+      "*://*/*",
+      "storage"
+    ],
+  
+    "page_action": {
+      "default_icon": {
+        "20": "images/logo-16.png",
+        "25": "images/logo-16.png",
+        "30": "images/logo-32.png",
+        "40": "images/logo-48.png"
+      }
+    }
+  }

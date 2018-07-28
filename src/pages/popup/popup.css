@@ -1,0 +1,184 @@
+/* Shoelace */
+
+@import "shoelace-css/source/css/normalize.css";
+@import "shoelace-css/source/css/content.css";
+@import "shoelace-css/source/css/grid.css";
+@import "shoelace-css/source/css/forms.css";
+@import "shoelace-css/source/css/switches.css";
+@import "shoelace-css/source/css/tables.css";
+@import "shoelace-css/source/css/utilities.css";
+@import "shoelace-css/source/css/variables.css";
+
+/* Global */
+
+html, body {
+    background: var(--body-bg-color);
+    box-sizing: border-box;
+    color: var(--body-color);
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    font: caption;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    width: 250px;
+}
+
+body {
+    transition-duration: 0.10s;
+    transition-property: height;
+}
+
+body * {
+    box-sizing: border-box;
+    text-align: start;
+}
+
+a, a:hover, a:active {
+    color: var(--body-color);
+    text-decoration: none;
+}
+
+/* Panel */
+
+.panel {
+    background: var(--body-bg-color);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    transition-duration: 0.20s;
+    transition-property: transform;
+}
+
+.panel:target {
+    transform: translateX(0vw);
+}
+
+.panel:not(:target):not(:first-of-type) {
+    transform: translateX(100vw);
+}
+
+/* Panel Section */
+
+.panel-section {
+    display: flex;
+    flex-direction: row;
+}
+
+.panel-section-separator {
+    background-color: rgba(0, 0, 0, 0.15);
+    min-height: 1px;
+}
+
+/* Panel Section - Header */
+
+.panel-section-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    height: 64px;
+    line-height: 32px;
+    padding: 16px;
+}
+
+.panel-section-header > .button-back {
+    background-image: url("/images/icons/bx-chevron-left.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+    position: relative;
+}
+
+.panel-section-header > .button-back:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.panel-section-header > .text-section-header {
+    align-self: center;
+    font-size: 1.385em;
+    font-weight: lighter;
+}
+
+/* Panel Section - Body */
+
+.panel-section-body {
+    flex-direction: column;
+    width: 100vw;
+    overflow-y: auto;
+}
+
+/* Panel Section - Content */
+
+.panel-section-content {
+    flex-direction: column;
+    padding: 16px;
+}
+
+/* Panel Section - List */
+
+.panel-section-list {
+    flex-direction: column;
+    padding: 4px 0;
+}
+
+.panel-list-item {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 16px;
+    white-space: nowrap;
+}
+
+a.panel-list-item:not(.disabled):hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+a.panel-list-item:not(.disabled):hover:active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.panel-list-item.disabled {
+    color: color(var(--color-gray) shade(20%));
+}
+
+.panel-list-item > .button-open {
+    background-image: url("/images/icons/bx-chevron-right.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    position: relative;
+}
+
+.panel-list-item > .text {
+    flex-grow: 10;
+}
+
+.panel-list-item > .text-shortcut {
+    color: var(--color-gray);
+    font-family: "Lucida Grande", caption;
+    font-size: .847em;
+    justify-content: flex-end;
+}
+
+.panel-section-list .panel-section-separator {
+    margin: 4px 0;
+}
+
+/* Icons */
+
+.icon-toggle {
+    background-image: url("/images/icons/bx-toggle.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+}

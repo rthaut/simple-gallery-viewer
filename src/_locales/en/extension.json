@@ -1,0 +1,10 @@
+{
+    "ExtensionName": {
+      "message": "Simple Gallery Viewer",
+      "description": "The name of the extension."
+    },
+    "ExtensionDescription": {
+      "message": "A customizable viewer for image galleries",
+      "description": "The short description of the extension."
+    }
+  }
