@@ -28,6 +28,22 @@ $('a[href^=\\#]').on('click', function (e) {
     setBodyHeightForPanel(panel);
 });
 
+$('a#create_config').on('click', function (e) {
+    browser.windows.create({
+        'type': 'popup',
+        'url': browser.extension.getURL('/pages/create/create.html')
+    });
+});
+
+$('a#edit_config').on('click', function (e) {
+    const params = (new URL(document.location)).searchParams;
+    const UUID = params.get('UUID');
+    browser.windows.create({
+        'type': 'popup',
+        'url': browser.extension.getURL('/pages/create/create.html') + '?UUID=' + UUID
+    });
+});
+
 (async () => {
     // get values for the toggle settings from synced storage and assign default values where applicable
     const settings = Object.assign(
@@ -73,10 +89,22 @@ $('a[href^=\\#]').on('click', function (e) {
                 // reset the toggle's state
                 $(this).prop('checked', !value);
             });
-            
+
         });
 
         // enable the toggle, now that we are ready for the user to interact with it
         toggle.prop('disabled', false);
     });
+})();
+
+(async () => {
+    // get existing configurations
+    const { 'Configurations': configurations } = await browser.storage.sync.get('Configurations');
+    console.log('Configurations', configurations);
+
+    if (configurations.length) {
+        configurations.forEach((config) => {
+            $('#config_list').append(`<div class="panel-list-item"><div class="text">${config.Name}</div><div class="button button-edit"></div><div class="button button-delete"></div><div class="button button-disable"></div></div>`);
+        });
+    }
 })();

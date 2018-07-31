@@ -24,7 +24,7 @@
 
                     <a class="panel-list-item" href="#configurations">
                         <div class="text">Manage Configurations</div>
-                        <div class="button-open"></div>
+                        <div class="button button-right"></div>
                     </a>
 
                     <div class="panel-section-separator"></div>
@@ -35,27 +35,27 @@
 
                     <div class="panel-list-item">
                         <div class="text">
-                            <span class="switch">
-                                <input type="checkbox" id="ThumbnailsEnabled" name="ThumbnailsEnabled" checked disabled>
-                                <label for="ThumbnailsEnabled">Show Thumbnails</label>
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="panel-list-item">
-                        <div class="text">
-                            <span class="switch">
-                                <input type="checkbox" id="SlideshowLayoutEnabled" name="SlideshowLayoutEnabled" disabled>
-                                <label for="SlideshowLayoutEnabled">Use Slideshow Layout</label>
+                            <span class="toggle toggle-block toggle-right toggle-primary">
+                                <input type="checkbox" id="thumbnails" name="ThumbnailsEnabled" checked disabled>
+                                <label for="thumbnails">Show Thumbnails</label>
                             </span>
                         </div>
                     </div>
 
                     <div class="panel-list-item">
                         <div class="text">
-                            <span class="switch">
-                                <input type="checkbox" id="PreloadEnabled" name="PreloadEnabled" checked disabled>
-                                <label for="PreloadEnabled">Preload Images</label>
+                            <span class="toggle toggle-block toggle-right toggle-primary">
+                                <input type="checkbox" id="slideshow" name="SlideshowLayoutEnabled" disabled>
+                                <label for="slideshow">Use Slideshow Layout</label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="panel-list-item">
+                        <div class="text">
+                            <span class="toggle toggle-block toggle-right toggle-primary">
+                                <input type="checkbox" id="preload" name="PreloadEnabled" checked disabled>
+                                <label for="preload">Preload Images</label>
                             </span>
                         </div>
                     </div>
@@ -64,12 +64,12 @@
 
                     <a class="panel-list-item" href="#help">
                         <div class="text">Help</div>
-                        <div class="button-open"></div>
+                        <div class="button button-right"></div>
                     </a>
 
                     <a class="panel-list-item" href="#about">
                         <div class="text">About</div>
-                        <div class="button-open"></div>
+                        <div class="button button-right"></div>
                     </a>
 
                 </div>
@@ -89,7 +89,26 @@
 
             <div class="panel-section panel-section-body">
 
-                <div class="panel-section panel-section-list">
+                <div class="panel-section panel-section-list" id="config_list">
+
+                    <a class="panel-list-item" id="create_config">
+                        <div class="text">Create Configuration</div>
+                        <div class="button button-right"></div>
+                    </a>
+
+                    <a class="panel-list-item" href="#import_config">
+                        <div class="text">Import Configuration</div>
+                        <div class="button button-right"></div>
+                    </a>
+
+                    <a class="panel-list-item" href="#export_configs">
+                        <div class="text">Export Configuration(s)</div>
+                        <div class="button button-right"></div>
+                    </a>
+
+                    <div class="panel-section-separator"></div>
+
+                    <!-- Existing Configurations are Inserted Here -->
 
                 </div>
 
@@ -111,7 +130,6 @@
                 <div class="panel-section panel-section-content">
 
                     <h4>Configuration</h4>
-
                     <p>Can't stop won't stop must configure everything.</p>
 
                 </div>
@@ -120,19 +138,19 @@
 
                 <div class="panel-section panel-section-content">
 
-                        <h4>Hotkeys</h4>
-                        <table class="table-striped">
-                            <thead>
-                                <tr><th>Action</th><th>Hotkey</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Toggle Thumbnails</td><td><kbd>T</kbd></td></tr>
-                                <tr><td>Toggle Fullscreen</td><td><kbd>F</kbd></td></tr>
-                                <tr><td>Toggle Gallery Style</td><td><kbd>G</kbd></td></tr>
-                                <tr><td>Go to Top</td><td><kbd>Home</kbd></td></tr>
-                                <tr><td>Go to Bottom</td><td><kbd>End</kbd></td></tr>
-                            </tbody>
-                        </table>
+                    <h4>Hotkeys</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr><th>Action</th><th>Hotkey</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Toggle Thumbnails</td><td><kbd>T</kbd></td></tr>
+                            <tr><td>Toggle Fullscreen</td><td><kbd>F</kbd></td></tr>
+                            <tr><td>Toggle Gallery Style</td><td><kbd>G</kbd></td></tr>
+                            <tr><td>Go to Top</td><td><kbd>Home</kbd></td></tr>
+                            <tr><td>Go to Bottom</td><td><kbd>End</kbd></td></tr>
+                        </tbody>
+                    </table>
 
                 </div>
 
@@ -156,7 +174,7 @@
                     <h4>Pitchfork taxidermy meggings single-origin coffee.</h4>
 
                     <p>Raw denim humblebrag vegan four loko, cillum tacos food truck neutra squid laborum coloring book fanny pack tattooed cray. Tumblr gentrify DIY, edison bulb mumblecore lo-fi narwhal tote bag echo park artisan shaman snackwave leggings umami.</p>
-                    
+
                     <p>Offal chambray reprehenderit ethical franzen eu deserunt adaptogen synth meggings yr. Master cleanse etsy meggings pinterest celiac.</p>
 
                 </div>

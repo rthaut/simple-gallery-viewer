@@ -1,29 +1,67 @@
-/* Shoelace */
+/* Bootstrap */
 
-@import "shoelace-css/source/css/normalize.css";
-@import "shoelace-css/source/css/content.css";
-@import "shoelace-css/source/css/grid.css";
-@import "shoelace-css/source/css/forms.css";
-@import "shoelace-css/source/css/switches.css";
-@import "shoelace-css/source/css/tables.css";
-@import "shoelace-css/source/css/utilities.css";
-@import "shoelace-css/source/css/variables.css";
+@import "bootstrap/less/variables.less";
+@import "bootstrap/less/mixins.less";
+
+@import "bootstrap/less/normalize.less";
+// @import "bootstrap/less/print.less";
+// @import "bootstrap/less/glyphicons.less";
+
+@import "bootstrap/less/scaffolding.less";
+@import "bootstrap/less/type.less";
+@import "bootstrap/less/code.less";
+@import "bootstrap/less/grid.less";
+@import "bootstrap/less/tables.less";
+@import "bootstrap/less/forms.less";
+@import "bootstrap/less/buttons.less";
+
+// @import "bootstrap/less/button-groups.less";
+// @import "bootstrap/less/input-groups.less";
+// @import "bootstrap/less/navs.less";
+// @import "bootstrap/less/navbar.less";
+// @import "bootstrap/less/breadcrumbs.less";
+// @import "bootstrap/less/pagination.less";
+// @import "bootstrap/less/pager.less";
+// @import "bootstrap/less/labels.less";
+// @import "bootstrap/less/badges.less";
+// @import "bootstrap/less/jumbotron.less";
+// @import "bootstrap/less/thumbnails.less";
+// @import "bootstrap/less/alerts.less";
+// @import "bootstrap/less/progress-bars.less";
+// @import "bootstrap/less/media.less";
+// @import "bootstrap/less/list-group.less";
+// @import "bootstrap/less/panels.less";
+// @import "bootstrap/less/responsive-embed.less";
+// @import "bootstrap/less/wells.less";
+// @import "bootstrap/less/close.less";
+
+// @import "bootstrap/less/modals.less";
+// @import "bootstrap/less/tooltip.less";
+// @import "bootstrap/less/popovers.less";
+// @import "bootstrap/less/carousel.less";
+
+@import "bootstrap/less/utilities.less";
+@import "bootstrap/less/responsive-utilities.less";
+
+@import "../../less/includes/_toggles.less";
+
 
 /* Global */
 
 html, body {
-    background: var(--body-bg-color);
+    background: @body-bg;
     box-sizing: border-box;
-    color: var(--body-color);
+    color: @text-color;
     cursor: default;
     display: flex;
     flex-direction: column;
     font: caption;
+    font-size: @font-size-base;
     margin: 0;
     padding: 0;
     position: relative;
     overflow: hidden;
-    width: 250px;
+    width: 300px;
 }
 
 body {
@@ -37,14 +75,14 @@ body * {
 }
 
 a, a:hover, a:active {
-    color: var(--body-color);
+    color: @text-color;
     text-decoration: none;
 }
 
 /* Panel */
 
 .panel {
-    background: var(--body-bg-color);
+    background: @body-bg;
     position: fixed;
     height: 100%;
     width: 100%;
@@ -145,17 +183,32 @@ a.panel-list-item:not(.disabled):hover:active {
 }
 
 .panel-list-item.disabled {
-    color: color(var(--color-gray) shade(20%));
+    color: shade(@text-muted, 20%);
 }
 
-.panel-list-item > .button-open {
-    background-image: url("/images/icons/bx-chevron-right.svg");
+.panel-list-item > .button {
     background-position: center center;
     background-repeat: no-repeat;
     width: 16px;
     height: 16px;
     margin-left: 8px;
     position: relative;
+
+    &.button-disable {
+        background-image: url("/images/icons/bx-checkbox-checked.svg");
+    }
+
+    &.button-enable {
+        background-image: url("/images/icons/bx-checkbox.svg");
+    }
+
+    &.button-right {
+        background-image: url("/images/icons/bx-chevron-right.svg");
+    }
+
+    &.button-trash {
+        background-image: url("/images/icons/bx-trash.svg");
+    }
 }
 
 .panel-list-item > .text {
@@ -163,7 +216,7 @@ a.panel-list-item:not(.disabled):hover:active {
 }
 
 .panel-list-item > .text-shortcut {
-    color: var(--color-gray);
+    color: @text-muted;
     font-family: "Lucida Grande", caption;
     font-size: .847em;
     justify-content: flex-end;

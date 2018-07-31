@@ -73,11 +73,7 @@ gulp.task('clean', () => {
 gulp.task('minify', () => {
     return $.pump([
         gulp.src(['./dist/**/*.{css,js}', '!./dist/*/vendor/**/*', '!./dist/**/*.min.*', ]),
-        $.gulpIf(['**/*.css'], $.postcss([
-            require('cssnano')({
-                'preset': 'default',
-            })
-        ])),
+        $.gulpIf(['**/*.css'], $.postcss()), // options are loaded from postcss.config.js automatically
         $.gulpIf(['**/*.js'], $.uglify(cfg.plugin_options.uglify)),
         // TODO: the filenames SHOULD include .min, but we would need to update the paths in both the HTML files and the manifests
         //$.rename({ 'suffix': '.min' }),
@@ -98,32 +94,23 @@ gulp.task('lint:helpers', () => {
 });
 
 
-gulp.task('build:css', () => {
-    return merge(Object.keys(cfg.supported_browsers).map((browser) => {
-        return $.pump([
-            gulp.src([`${cfg.source_folders.css}/**/*.css`]),
-            $.replace(/browser-extension\:\/\//gm, cfg.supported_browsers[browser].protocol),
-            $.postcss([
-                require('postcss-import'),
-                // require('postcss-cssnext')
-                require('postcss-preset-env')({
-                    'stage': 4,
-                    'features': {
-                        'custom-properties': false
-                    }
-                })
-            ]),
-            gulp.dest(`./dist/${browser}/css`),
-        ]);
-    }));
-});
-
-
 gulp.task('build:images', () => {
     return $.pump([
         gulp.src([`${cfg.source_folders.images}/**/*.{png,svg}`]),
         ...Object.keys(cfg.supported_browsers).map(browser => gulp.dest(`./dist/${browser}/images`)),
     ]);
+});
+
+
+gulp.task('build:less', () => {
+    return merge(Object.keys(cfg.supported_browsers).map((browser) => {
+        return $.pump([
+            gulp.src([`${cfg.source_folders.less}/*.less`]),
+            $.less(cfg.plugin_options.less),
+            $.replace(/browser-extension\:\/\//gm, cfg.supported_browsers[browser].protocol),
+            gulp.dest(`./dist/${browser}/css`),
+        ]);
+    }));
 });
 
 
@@ -194,18 +181,7 @@ gulp.task('build:pages', gulp.series('lint:pages', () => {
             // TODO: if/whe useref works, this line must be removed (useref passes the HTML files and all assets through the stream)
             gulp.src([`${cfg.source_folders.pages}/${folder}/**/*.*`]),
 
-            $.gulpIf(['**/*.css'], $.postcss([
-                require('postcss-import')(),
-                require('postcss-preset-env')({
-                    'stage': 2,
-                    'features': {
-                        'custom-properties': {
-                            'preserve': false
-                        },
-                        'nesting-rules': true
-                    }
-                })
-            ])),
+            $.gulpIf(['**/*.less'], $.less(cfg.plugin_options.less)),
 
             // TODO: maybe use gulp-html-replace to only inject the browser polyfill for Chrome (or remove it for Firefox)? then the manifest for Firefox can probably omit the polyfill script completely
             ...Object.keys(cfg.supported_browsers).map(browser => gulp.dest(`./dist/${browser}/pages/${folder}`)),
@@ -247,6 +223,23 @@ gulp.task('build:vendor', () => {
 });
 
 
+gulp.task('build:vendor:fixes', () => {
+    return merge(Object.keys(cfg.supported_browsers).map((browser) => {
+        return $.pump([
+            gulp.src([
+                `./dist/${browser}/vendor/**/*`
+            ]),
+
+            // replace angular.uppercase() with String.prototype.toUpperCase() in angular-schema-form
+            // (only needed until https://github.com/json-schema-form/angular-schema-form/issues/970 is fixed)
+            $.gulpIf('**/schema-form.*.js', $.replace(/\w+\.uppercase\(([^\)]+)\)/gi, '$1.toUpperCase()')),
+
+            gulp.dest(`./dist/${browser}/vendor`),
+        ]);
+    }));
+});
+
+
 // ========================
 // package/distribute tasks
 // ========================
@@ -272,18 +265,19 @@ gulp.task('lint', gulp.parallel(
 ));
 
 gulp.task('build', gulp.parallel(
-    'build:css',
     'build:images',
+    'build:less',
     'build:logos',
     'build:locales',
     'build:manifests',
     'build:pages',
     'build:scripts',
-    'build:vendor'
+    'build:vendor',
+    'build:vendor:fixes'
 ));
 
-gulp.task('watch', (callback) => {    
-    $.watch(`${cfg.source_folders.css}/**/*`, gulp.series('build:css'));
+gulp.task('watch', (callback) => {
+    $.watch(`${cfg.source_folders.less}/**/*`, gulp.series('build:less'));
     $.watch(`${cfg.source_folders.locales}/**/*`, gulp.series('build:locales'));
     $.watch(`${cfg.source_folders.manifests}/**/*`, gulp.series('build:manifests'));
     $.watch(`${cfg.source_folders.pages}/**/*`, gulp.series('build:pages'));

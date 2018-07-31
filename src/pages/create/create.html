@@ -1,0 +1,68 @@
+<!doctype html>
+<html ng-app="EditConfigurationApp">
+
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="create.css" />
+    </head>
+
+    <body ng-controller="EditConfigurationCtrl">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col">
+
+                    <div class="page-header">
+                        <h1>{{action}} Configuration</h1>
+                        <h4>Need Help? Check out the <a>Configuration Wiki</a> for documentation and examples.</h4>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-danger" ng-show="error"><p>{{error}}</p></div>
+                    <form name="config" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="save(config)"></form>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="successModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Configuration Saved Successfully</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>You can safely close this window, or you can continue editing the configuration.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Continue Editing</button>
+                        <button type="button" class="btn btn-primary" id="close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- dependencies -->
+        <script type="application/javascript" src="../../vendor/jquery.min.js"></script>
+        <script type="application/javascript" src="../../vendor/angular.min.js"></script>
+        <script type="application/javascript" src="../../vendor/angular-sanitize.min.js"></script>
+        <script type="application/javascript" src="../../vendor/angular-uuid.js"></script>
+        <script type="application/javascript" src="../../vendor/bootstrap.min.js"></script>
+
+        <script type="application/javascript" src="../../vendor/tv4.js"></script>
+        <script type="application/javascript" src="../../vendor/ObjectPath.js"></script>
+        <script type="application/javascript" src="../../vendor/schema-form.min.js"></script>
+        <script type="application/javascript" src="../../vendor/bootstrap-decorator.min.js"></script>
+
+        <!-- main script for this page -->
+        <script type="application/javascript" src="create.js"></script>
+    </body>
+
+</html>

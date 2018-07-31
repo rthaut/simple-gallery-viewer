@@ -23,8 +23,15 @@
     "url": "https://github.com/rthaut/simple-gallery-viewer/issues"
   },
   "dependencies": {
+    "angular": "^1.7.2",
+    "angular-sanitize": "^1.7.2",
+    "angular-schema-form": "^0.8.13",
+    "angular-uuid": "^0.0.4",
+    "bootstrap": "~3.3.7",
     "jquery": "^3.3.1",
-    "shoelace-css": "^1.0.0-beta24",
+    "less": "^3.8.0",
+    "objectpath": "^1.2.1",
+    "tv4": "^1.3.0",
     "webextension-polyfill": "^0.3.0"
   },
   "devDependencies": {
@@ -35,6 +42,7 @@
     "gulp-eslint": "^5.0.0",
     "gulp-header": "^2.0.5",
     "gulp-if": "^2.0.2",
+    "gulp-less": "^4.0.1",
     "gulp-load-plugins": "^1.5.0",
     "gulp-merge-json": "^1.3.1",
     "gulp-postcss": "^7.0.1",
@@ -45,9 +53,6 @@
     "gulp-watch": "^5.0.1",
     "gulp-zip": "^4.1.0",
     "merge-stream": "^1.0.1",
-    "postcss-import": "^11.1.0",
-    "postcss-preset-env": "^5.3.0",
-    "postcss-url": "^7.3.2",
     "pump": "^3.0.0",
     "rollup-stream": "^1.24.1",
     "uglify-es": "^3.3.9",

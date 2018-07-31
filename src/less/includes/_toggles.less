@@ -1,0 +1,223 @@
+.toggle {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  input {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    background: none;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+    padding: 0;
+  }
+
+  input ~ label {
+    position: relative;
+    font-size: @font-size-base;
+    font-weight: normal;
+    height: calc(@input-height-base / 2);
+    line-height: calc(@input-height-base / 2);
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    vertical-align: middle;
+    padding-left: calc(@input-height-base + 5px);
+    .user-select(none);
+  }
+
+  input ~ label::before,
+  input ~ label::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: @input-height-base;
+    height: calc(@input-height-base / 2);
+    display: block;
+  }
+
+  input ~ label::before {
+    left: 0;
+    border: 1px solid @btn-default-border;
+    background-color: @btn-default-border;
+    border-radius: @input-height-base;
+    transition: 0.1s all;
+  }
+
+  input ~ label::after {
+    top: 2px;
+    left: 2px;
+    width: calc(@input-height-base / 2 - 2px * 2);
+    height: calc(@input-height-base / 2 - 2px * 2);
+    border-radius: 50%;
+    background-color: @input-bg;
+    transition: 0.1s;
+  }
+
+  input:checked ~ label::before {
+    background-color: @btn-default-border;
+  }
+
+  input:checked ~ label::after {
+    transform: translateX(calc(@input-height-base / 2));
+  }
+
+  input:focus ~ label::before {
+    outline: none;
+    .box-shadow(0 0 0 2px fade(@btn-default-border, 50%));
+  }
+
+  input:disabled ~ label {
+    opacity: 0.5;
+    cursor: @cursor-disabled;
+  }
+
+  &.toggle-block {
+    input ~ label {
+      display: block;
+      text-align: right;
+    }
+  }
+
+  &.toggle-right {
+    .toggle-variant-right(@input-height-base);
+  }
+
+  // Size Variations
+
+  &.toggle-sm {
+    input ~ label {
+      font-size: @font-size-small;
+      height: calc(@input-height-small / 2);
+      line-height: calc(@input-height-small / 2);
+      padding-left: calc(@input-height-small + 5px);
+    }
+
+    input ~ label::before,
+    input ~ label::after {
+      width: @input-height-small;
+      height: calc(@input-height-small / 2);
+    }
+
+    input ~ label::before {
+      border-radius: @input-height-small;
+    }
+
+    input ~ label::after {
+      width: calc(@input-height-small / 2 - 2px * 2);
+      height: calc(@input-height-small / 2 - 2px * 2);
+    }
+
+    input:checked ~ label::after {
+      transform: translateX(calc(@input-height-small / 2));
+    }
+
+    &.toggle-right {
+      .toggle-variant-right(@input-height-small);
+    }
+  }
+
+  &.toggle-lg {
+    input ~ label {
+      font-size: @font-size-large;
+      height: calc(@input-height-large / 2);
+      line-height: calc(@input-height-large / 2);
+      padding-left: calc(@input-height-large + 5px);
+    }
+
+    input ~ label::before,
+    input ~ label::after {
+      width: @input-height-large;
+      height: calc(@input-height-large / 2);
+    }
+
+    input ~ label::before {
+      border-radius: @input-height-large;
+    }
+
+    input ~ label::after {
+      width: calc(@input-height-large / 2 - 2px * 2);
+      height: calc(@input-height-large / 2 - 2px * 2);
+    }
+
+    input:checked ~ label::after {
+      transform: translateX(calc(@input-height-large / 2));
+    }
+
+    &.toggle-right {
+      .toggle-variant-right(@input-height-large);
+    }
+  }
+
+  // Color Variations
+
+  &.toggle-primary {
+    .toggle-variant-color(@btn-primary-bg, @btn-primary-border);
+  }
+
+  &.toggle-success {
+    .toggle-variant-color(@btn-success-bg, @btn-success-border);
+  }
+
+  &.toggle-info {
+    .toggle-variant-color(@btn-info-bg, @btn-info-border);
+  }
+
+  &.toggle-warning {
+    .toggle-variant-color(@btn-warning-bg, @btn-warning-border);
+  }
+
+  &.toggle-danger {
+    .toggle-variant-color(@btn-danger-bg, @btn-danger-border);
+  }
+}
+
+.toggle-variant-color(@color; @shadow) {
+  input ~ label::before {
+    border-color: @color;
+  }
+  input:checked ~ label::before {
+    background-color: @color;
+  }
+  input:focus ~ label::before {
+    .box-shadow(0 0 0 2px fade(@shadow, 50%));
+  }
+}
+
+.toggle-variant-right(@size) {
+  input ~ label {
+    padding-left: 0;
+    padding-right: calc(@size + 5px);
+  }
+
+  input ~ label::before,
+  input ~ label::after {
+    left: auto;
+    right: 0;
+  }
+
+  input ~ label::before {
+    left: auto;
+    right: 0;
+  }
+
+  input ~ label::after {
+    left: auto;
+    right: calc(@size / 2 + 2px);
+  }
+
+  input:checked ~ label::after {
+    transform: translateX(-calc(@size / 2));
+  }
+
+  &.toggle-block {
+    input ~ label {
+      text-align: left;
+    }
+  }
+}

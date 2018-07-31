@@ -1,35 +1,49 @@
 {
-    "supported_browsers": {
-      "firefox": {
-        "protocol": "moz-extension://"
-      },
-      "chrome": {
-        "protocol": "chrome-extension://"
-      },
-      "edge": {
-        "protocol": "ms-browser-extension://"
-      }
+  "supported_browsers": {
+    "firefox": {
+      "protocol": "moz-extension://"
     },
-    "vendor_files": [
-      "./node_modules/jquery/dist/jquery.min.js",
-      "./node_modules/shoelace-css/dist/shoelace.js",
-      "./node_modules/webextension-polyfill/dist/browser-polyfill.min.js"
-    ],
-    "plugin_options": {
-      "uglify": {
-        "compress": {
-          "drop_console": true
-        },
-        "mangle": true
-      }
+    "chrome": {
+      "protocol": "chrome-extension://"
     },
-    "source_folders": {
-      "css": "./src/css",
-      "helpers": "./src/helpers",
-      "images": "./src/images",
-      "locales": "./src/_locales",
-      "manifests": "./src/manifests",
-      "pages": "./src/pages",
-      "scripts": "./src/scripts"
+    "edge": {
+      "protocol": "ms-browser-extension://"
     }
+  },
+  "vendor_files": [
+    "./node_modules/angular/angular-csp.css",
+    "./node_modules/angular/angular.min.js",
+    "./node_modules/angular-sanitize/angular-sanitize.min.js",
+    "./node_modules/angular-schema-form/dist/bootstrap-decorator.min.js",
+    "./node_modules/angular-schema-form/dist/schema-form.min.js",
+    "./node_modules/angular-uuid/angular-uuid.js",
+    "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+    "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+    "./node_modules/jquery/dist/jquery.min.js",
+    "./node_modules/objectpath/lib/ObjectPath.js",
+    "./node_modules/tv4/tv4.js",
+    "./node_modules/webextension-polyfill/dist/browser-polyfill.min.js"
+  ],
+  "plugin_options": {
+    "less": {
+      "paths": "node_modules",
+      "outputStyle": "compressed",
+      "sourceMap": false
+    },
+    "uglify": {
+      "compress": {
+        "drop_console": true
+      },
+      "mangle": true
+    }
+  },
+  "source_folders": {
+    "helpers": "./src/helpers",
+    "images": "./src/images",
+    "less": "./src/less",
+    "locales": "./src/_locales",
+    "manifests": "./src/manifests",
+    "pages": "./src/pages",
+    "scripts": "./src/scripts"
   }
+}
