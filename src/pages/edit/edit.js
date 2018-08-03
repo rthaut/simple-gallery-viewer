@@ -20,6 +20,11 @@ angular
                     'type': 'string',
                     'title': 'Configuration Description'
                 },
+                'Enabled': {
+                    'type': 'boolean',
+                    'title': 'Enabled',
+                    'default': true
+                },
                 'ApplyToAllURLs': {
                     'type': 'boolean',
                     'title': 'Apply to All URL(s)',
@@ -160,27 +165,17 @@ angular
             'UUID': uuid.v4()
         };
 
-        $scope.save = async function (form) {
+        $scope.save = function (form) {
             $scope.$broadcast('schemaFormValidate');
             if (form.$valid) {
                 $scope.error = false;
 
-                let { 'Configurations': configurations } = await browser.storage.sync.get('Configurations');
-
-                if (configurations === undefined || configurations === null) {
-                    configurations = [];
-                }
-
-                const configIdx = configurations.findIndex(config => config.UUID === $scope.model.UUID);
-                if (configIdx > -1) {
-                    // replace the existing configuration with the same UUID
-                    configurations.splice(configIdx, 1, $scope.model);
-                } else {
-                    // append the new configuration to the list
-                    configurations.push($scope.model);
-                }
-
-                browser.storage.sync.set({ 'Configurations': configurations }).then(() => {
+                browser.runtime.sendMessage({
+                    'action': 'save-config',
+                    'data': {
+                        'config': angular.copy($scope.model)
+                    }
+                }).then(() => {
                     $('#successModal').modal('show');
                 }).catch((error) => {
                     $scope.error = `Failed to save configuration (${error})`;
@@ -193,16 +188,24 @@ angular
 
         $('button#close').on('click', function (e) {
             $('#successModal').modal('hide');
-            window.parent.close();
-            window.close();
+            browser.windows.getCurrent().then((window) => {
+                browser.runtime.sendMessage({
+                    'action': 'close-config-editor',
+                    'data': {
+                        'windowID': window.id
+                    }
+                });
+            });
         });
 
-        (async function LoadConfig () {
+        (async function LoadConfig() {
             const params = (new URL(document.location)).searchParams;
             const UUID = params.get('UUID');
 
             if (UUID !== null && UUID.length) {
-                const { 'Configurations': configurations } = await browser.storage.sync.get('Configurations');
+                const {
+                    'Configurations': configurations
+                } = await browser.storage.sync.get('Configurations');
 
                 if (configurations !== undefined && configurations.length) {
                     const config = configurations.find(config => config.UUID === UUID);
