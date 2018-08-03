@@ -65,8 +65,7 @@ html, body {
 }
 
 body {
-    transition-duration: 0.10s;
-    transition-property: height;
+    transition: 0.10s height;
 }
 
 body * {
@@ -76,6 +75,7 @@ body * {
 
 a, a:hover, a:active {
     color: @text-color;
+    cursor: default;
     text-decoration: none;
 }
 
@@ -86,12 +86,11 @@ a, a:hover, a:active {
     position: fixed;
     height: 100%;
     width: 100%;
-    transition-duration: 0.20s;
-    transition-property: transform;
+    transition: 0.20s transform;
 }
 
 .panel:target {
-    transform: translateX(0vw);
+    transform: translateX(0);
 }
 
 .panel:not(:target):not(:first-of-type) {
@@ -103,11 +102,12 @@ a, a:hover, a:active {
 .panel-section {
     display: flex;
     flex-direction: row;
-}
 
-.panel-section-separator {
-    background-color: rgba(0, 0, 0, 0.15);
-    min-height: 1px;
+    .panel-section-separator {
+        background-color: rgba(0, 0, 0, 0.15);
+        margin: 4px 0;
+        min-height: 1px;
+    }
 }
 
 /* Panel Section - Header */
@@ -117,27 +117,28 @@ a, a:hover, a:active {
     height: 64px;
     line-height: 32px;
     padding: 16px;
-}
 
-.panel-section-header > .button-back {
-    background-image: url("/images/icons/bx-chevron-left.svg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 32px;
-    height: 32px;
-    margin-right: 16px;
-    position: relative;
-}
+    .button-back {
+        background-image: url("/images/icons/bx-chevron-left.svg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 32px;
+        height: 32px;
+        margin-right: 16px;
+        position: relative;
+    }
 
-.panel-section-header > .button-back:hover {
-    background-color: rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
+    .button-back:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
 
-.panel-section-header > .text-section-header {
-    align-self: center;
-    font-size: 1.385em;
-    font-weight: lighter;
+    .text-section-header {
+        align-self: center;
+        font-size: 1.385em;
+        font-weight: lighter;
+    }
 }
 
 /* Panel Section - Body */
@@ -146,6 +147,7 @@ a, a:hover, a:active {
     flex-direction: column;
     width: 100vw;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Panel Section - Content */
@@ -169,13 +171,123 @@ a, a:hover, a:active {
     height: 28px;
     line-height: 28px;
     padding: 0 16px;
+    position: relative;
     white-space: nowrap;
+
+    .text {
+        flex-grow: 10;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .text-shortcut {
+        color: @text-muted;
+        font-family: "Lucida Grande", caption;
+        font-size: .847em;
+        justify-content: flex-end;
+    }
+
+    .icon {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 24px;
+        height: 24px;
+        margin-left: 8px;
+        position: relative;
+
+        &.arrow-right {
+            background-image: url("/images/icons/bx-chevron-right.svg");
+        }
+
+        &.plus {
+            background-image: url("/images/icons/bx-plus.svg");
+        }
+    }
+
+    .button-bar {
+        display: flex;
+        justify-content: flex-end;
+        height: 28px;
+
+        .button {
+            &.button-icon {
+                height: 24px;
+                width: 24px;
+            }
+        }
+    }
+
+    .button {
+        display: flex;
+        height: 28px;
+        line-height: 28px;
+        margin-left: 8px;
+        padding: 0 8px;
+        position: relative;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &:hover:active {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        &.button-icon {
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-origin: content-box;
+            padding: 2px 0;
+        }
+
+        &.button-toggle {
+            &.button-disable {
+                background-image: url("/images/icons/bx-checkbox-checked.svg");
+            }
+
+            &.button-enable {
+                background-image: url("/images/icons/bx-checkbox.svg");
+            }
+        }
+
+        &.button-enable {
+            background-image: url("/images/icons/bx-checkbox.svg");
+        }
+
+        &.button-delete {
+            background-image: url("/images/icons/bxs-trash-alt.svg");
+        }
+
+        &.button-edit {
+            background-image: url("/images/icons/bxs-pencil.svg");
+        }
+    }
+
+    .overlay {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        line-height: 28px;
+        padding: 0 16px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        white-space: nowrap;
+        transform: translateX(100vw);
+        transition: 0.20s transform;
+
+        &.visible {
+            transform: translateX(0);
+        }
+    }
 }
 
 a.panel-list-item:not(.disabled):hover {
     background-color: rgba(0, 0, 0, 0.06);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 a.panel-list-item:not(.disabled):hover:active {
@@ -184,46 +296,6 @@ a.panel-list-item:not(.disabled):hover:active {
 
 .panel-list-item.disabled {
     color: shade(@text-muted, 20%);
-}
-
-.panel-list-item > .button {
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 16px;
-    height: 16px;
-    margin-left: 8px;
-    position: relative;
-
-    &.button-disable {
-        background-image: url("/images/icons/bx-checkbox-checked.svg");
-    }
-
-    &.button-enable {
-        background-image: url("/images/icons/bx-checkbox.svg");
-    }
-
-    &.button-right {
-        background-image: url("/images/icons/bx-chevron-right.svg");
-    }
-
-    &.button-trash {
-        background-image: url("/images/icons/bx-trash.svg");
-    }
-}
-
-.panel-list-item > .text {
-    flex-grow: 10;
-}
-
-.panel-list-item > .text-shortcut {
-    color: @text-muted;
-    font-family: "Lucida Grande", caption;
-    font-size: .847em;
-    justify-content: flex-end;
-}
-
-.panel-section-list .panel-section-separator {
-    margin: 4px 0;
 }
 
 /* Icons */
