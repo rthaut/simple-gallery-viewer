@@ -272,8 +272,7 @@ gulp.task('build', gulp.parallel(
     'build:manifests',
     'build:pages',
     'build:scripts',
-    'build:vendor',
-    'build:vendor:fixes'
+    gulp.series('build:vendor', 'build:vendor:fixes')
 ));
 
 gulp.task('watch', (callback) => {
