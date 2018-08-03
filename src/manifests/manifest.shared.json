@@ -1,26 +1,32 @@
 {
-    "manifest_version": 2,
-    "name": "__MSG_ExtensionName__",
-    "version": "<%= pkg.version %>",
-    "description": "__MSG_ExtensionDescription__",
-    "homepage_url": "<%= pkg.homepage %>",
-    "default_locale": "en",
-  
-    "icons": {
-      "16": "images/logo-16.png",
-      "32": "images/logo-32.png",
-      "48": "images/logo-48.png",
-      "64": "images/logo-64.png"
-    },
-  
-    "permissions": [
-      "<all_urls>",
-      "storage"
-    ],
-  
-    "browser_action": {
-      "default_icon": "images/logo.svg",
-      "default_popup": "pages/popup/popup.html",
-      "default_title": "__MSG_ExtensionName__"
-    }
+  "manifest_version": 2,
+  "name": "__MSG_ExtensionName__",
+  "version": "<%= pkg.version %>",
+  "description": "__MSG_ExtensionDescription__",
+  "homepage_url": "<%= pkg.homepage %>",
+  "default_locale": "en",
+
+  "icons": {
+    "16": "images/logo-16.png",
+    "32": "images/logo-32.png",
+    "48": "images/logo-48.png",
+    "64": "images/logo-64.png"
+  },
+
+  "permissions": [
+    "<all_urls>",
+    "storage"
+  ],
+
+  "browser_action": {
+    "default_icon": "images/logo.svg",
+    "default_popup": "pages/popup/popup.html",
+    "default_title": "__MSG_ExtensionName__"
+  },
+
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
   }
+}
