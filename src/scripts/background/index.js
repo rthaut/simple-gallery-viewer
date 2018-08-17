@@ -6,14 +6,17 @@ browser.runtime.onMessage.addListener((message, sender) => {
     console.log('[Background] browser.runtime.onMessage', message, sender);
 
     switch (message.action) {
+        case 'get-enabled-configs':
+            return Configs.getAllEnabled();
+
         case 'close-config-editor':
-            if (message.data !== undefined && message.data.windowID !== undefined) {
-                return browser.windows.remove(message.data.windowID);
+            if (message.data !== undefined && message.data.tabId !== undefined) {
+                return browser.tabs.remove(message.data.tabId);
             } else {
                 return browser.tabs.query({
                     'url': browser.extension.getURL('/pages/edit/edit.html') + '*'
                 }).then((tabs) => {
-                    return Promise.all(tabs.map((tab) => browser.windows.remove(tab.windowId)));
+                    return Promise.all(tabs.map((tab) => browser.tabs.remove(tab.tabId)));
                 });
             }
 

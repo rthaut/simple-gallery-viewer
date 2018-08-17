@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "title": "Configuration",
+  "properties": {
+    "UUID": {
+      "type": "string",
+      "title": "Unique ID"
+    },
+    "Name": {
+      "type": "string",
+      "title": "Configuration Name",
+      "minLength": 4
+    },
+    "Description": {
+      "type": "string",
+      "title": "Configuration Description"
+    },
+    "Enabled": {
+      "type": "boolean",
+      "title": "Enabled",
+      "default": true
+    },
+    "ApplyToAllURLs": {
+      "type": "boolean",
+      "title": "Apply to All URL(s)",
+      "default": true
+    },
+    "URLs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Pattern": {
+            "title": "URL Pattern",
+            "type": "string"
+          }
+        },
+        "required": ["Pattern"]
+      }
+    },
+    "ImageSelector": {
+      "type": "string",
+      "title": "Image(s) Selector"
+    },
+    "TransformImageURLs": {
+      "type": "boolean",
+      "title": "Transform Image URL(s)",
+      "default": false
+    },
+    "Transformations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Search": {
+            "title": "Search",
+            "type": "string"
+          },
+          "SearchRegExp": {
+            "title": "Regular Expression",
+            "type": "boolean",
+            "default": false
+          },
+          "Replacement": {
+            "title": "Replacement",
+            "type": "string"
+          }
+        },
+        "required": ["Search", "Replacement"]
+      }
+    }
+  },
+  "required": ["Name", "UUID", "ImageSelector"]
+}

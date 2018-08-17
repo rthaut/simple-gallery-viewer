@@ -1,5 +1,7 @@
 /* eslint-env browser, jquery, webextensions */
 
+import './popup.less';
+
 /**
  * Explicitly set the height of the body element to match the supplied panel's computed height
  * @param {JQuery<HTMLElement>} panel the panel for which the body should be sized to match
