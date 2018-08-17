@@ -24,6 +24,20 @@ const Configs = (() => {
             });
         },
 
+        'getAllEnabled': function() {
+            console.log('[Background] Configs.getAllEnabled()');
+
+            return browser.storage.sync.get('Configurations').then((data) => {
+                const configs = data.Configurations;
+
+                if (configs !== undefined && configs !== null && configs.length) {
+                    return configs.filter(c => c.Enabled !== false);
+                }
+
+                return [];
+            });
+        },
+
         /**
          * Removes the saved config for the specified UUID
          * @param {string} configUUID The UUID of the config to remove
@@ -101,6 +115,7 @@ const Configs = (() => {
                 return this.save(config).then(() => this.get(configUUID));
             });
         }
+
     };
 
     return Configs;
