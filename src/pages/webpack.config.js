@@ -28,6 +28,10 @@ module.exports = {
             },
             {
                 'test': /\.css$/,
+            },
+            {
+                'test': /\.html$/,
+                'loader': 'raw-loader'
             }
         ]
     },

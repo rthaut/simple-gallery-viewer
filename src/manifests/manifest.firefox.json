@@ -5,11 +5,11 @@
         "strict_min_version": "42.0"
       }
     },
-  
+
     "browser_action": {
       "browser_style": false,
       "default_icon": "images/logo.svg",
-      "default_popup": "pages/popup/popup.html",
+      "default_popup": "pages/popup-ng/popup-ng.html",
       "default_title": "__MSG_ExtensionName__"
     }
   }

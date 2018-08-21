@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SimpleGalleryViewer.Popup" ng-csp ng-controller="SimpleGalleryViewerPopupCtrl">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Simple Gallery Viewer</title>
+    </head>
+
+    <body>
+
+        <div class="panel" id="main">
+
+            <div class="panel-section panel-section-header">
+
+                <div class="icon-section-header"></div>
+                <div class="text-section-header">Simple Gallery Viewer</div>
+
+            </div>
+
+            <div class="panel-section panel-section-body">
+
+                <div class="panel-section panel-section-list">
+
+                    <a class="panel-list-item" href="#configurations">
+                        <div class="text">Manage Configurations</div>
+                        <div class="icon arrow-right"></div>
+                    </a>
+
+                    <div class="panel-section-separator"></div>
+
+                    <div class="panel-list-item disabled">
+                        <div class="text text-muted">Options</div>
+                    </div>
+
+                    <div class="panel-list-item" ng-repeat="(name, value) in settings">
+                        <div class="text">
+                            <span class="toggle toggle-block toggle-right toggle-primary">
+                                <input type="checkbox" id="{{name}}" ng-model="settings[name]" ng-change="toggleSetting(name)" ng-checked="value">
+                                <label for="{{name}}">{{name}}</label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="panel-section-separator"></div>
+
+                    <a class="panel-list-item" href="#help">
+                        <div class="text">Help</div>
+                        <div class="icon arrow-right"></div>
+                    </a>
+
+                    <a class="panel-list-item" href="#about">
+                        <div class="text">About</div>
+                        <div class="icon arrow-right"></div>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <config-panel></config-panel>
+
+        <help-panel></help-panel>
+
+        <about-panel></about-panel>
+
+        <!-- dependencies -->
+        <script src="../../vendor/jquery.min.js"></script>
+        <script src="../../vendor/angular.min.js"></script>
+        <script src="../../vendor/angular-sanitize.min.js"></script>
+    </body>
+
+</html>
