@@ -19,13 +19,13 @@ const Gallery = (() => {
             let container = jQuery(`#${ID}`);
 
             if (container !== undefined && container !== null && container.length) {
-                console.warning('[Content] Gallery.build() :: Container already exists', container);
+                console.warn('[Content] Gallery.build() :: Container already exists', container);
                 container.remove();
             }
 
             container = jQuery(`
                 <div id="${ID}">
-                    <button type="button" class="close" aria-label="Close" onclick="javascript:jQuery('#${ID}').remove();"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div id="${ID}Container">
                         <div id="${ID}Header">
                             <h1>${title || ''}</h1>
@@ -38,6 +38,10 @@ const Gallery = (() => {
                 `).appendTo('body');
 
             console.log('[Content] Gallery.build() :: Container', container);
+
+            container.find('button.close').on('click', function (event) {
+                jQuery(`#${ID}`).remove();
+            });
 
             // apply the theme asynchronously after the main structure is built
             browser.storage.sync.get('Theme').then((data) => {
@@ -59,7 +63,7 @@ const Gallery = (() => {
                     const img = jQuery(`#${ID}Images img[src="${images[i]}"]`);
 
                     if (img !== undefined && img !== null && img.length) {
-                        console.warning('[Content] Gallery.addImages() :: Image already exists');
+                        console.warn('[Content] Gallery.addImages() :: Image already exists', img);
                         continue;
                     }
 
