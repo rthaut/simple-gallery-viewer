@@ -1,0 +1,47 @@
+<div class="panel-section panel-section-header">
+
+    <a class="button-back" href="#!/"></a>
+    <div class="text-section-header">Manage Configurations</div>
+
+</div>
+
+<div class="panel-section panel-section-body">
+
+    <div class="panel-section panel-section-list" id="config_list">
+
+        <a class="panel-list-item" id="create_config" ng-click="ctrl.EditConfig()">
+            <div class="text">Create Configuration</div>
+            <div class="icon plus"></div>
+        </a>
+
+        <a class="panel-list-item" href="#!/configs/import">
+            <div class="text">Import Configuration</div>
+            <div class="icon arrow-right"></div>
+        </a>
+
+        <a class="panel-list-item" href="#!/configs/export">
+            <div class="text">Export Configuration(s)</div>
+            <div class="icon arrow-right"></div>
+        </a>
+
+        <div class="panel-section-separator"></div>
+
+        <div class="panel-list-item" ng-repeat="config in ctrl.configs" ng-class="{'text-muted': !config.Enabled}">
+            <div class="text">{{config.Name}}</div>
+            <div class="button-bar">
+                <a class="button button-icon button-edit" ng-click="ctrl.EditConfig(config)"></a>
+                <a class="button button-icon button-delete" ng-click="ctrl.DeleteConfig(config)"></a>
+                <a class="button button-icon button-toggle" ng-click="ctrl.ToggleConfig(config)" ng-class="{'button-disable': config.Enabled, 'button-enable': !config.Enabled}"></a>
+            </div>
+            <div class="overlay {{ctrl.prompt.class}}" ng-class="{'visible': ctrl.confirm == config}">
+                <div class="text">{{ctrl.prompt.text}}</div>
+                <div class="button-bar">
+                    <a class="button" ng-click="ctrl.prompt.yes()">Yes</a>
+                    <a class="button" ng-click="ctrl.prompt.no()">No</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

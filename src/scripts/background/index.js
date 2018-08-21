@@ -6,6 +6,21 @@ browser.runtime.onMessage.addListener((message, sender) => {
     console.log('[Background] browser.runtime.onMessage', message, sender);
 
     switch (message.action) {
+        case 'get-config':
+            return Configs.get(message.data.configUUID);
+
+        case 'delete-config':
+            return Configs.remove(message.data.configUUID);
+
+        case 'save-config':
+            return Configs.save(message.data.config);
+
+        case 'toggle-config':
+            return Configs.toggle(message.data.configUUID);
+
+        case 'get-all-configs':
+            return Configs.getAll();
+
         case 'get-enabled-configs':
             return Configs.getAllEnabled();
 
@@ -33,14 +48,5 @@ browser.runtime.onMessage.addListener((message, sender) => {
                 'type': 'popup',
                 'url': url
             });
-
-        case 'save-config':
-            return Configs.save(message.data.config);
-
-        case 'delete-config':
-            return Configs.remove(message.data.configUUID);
-
-        case 'toggle-config':
-            return Configs.toggle(message.data.configUUID);
     }
 });

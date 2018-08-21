@@ -45,6 +45,26 @@
 
 @import "../../less/includes/_toggles.less";
 
+@keyframes slideOutLeft {
+    from    { transform: translateX(0); }
+    to      { transform: translateX(-100%); }
+}
+
+@keyframes slideOutRight {
+    from    { transform: translateX(0); }
+    to      { transform: translateX(100%); }
+}
+
+@keyframes slideInLeft {
+    from    { transform: translateX(-100%); }
+    to      { transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from    { transform: translateX(100%); }
+    to      { transform: translateX(0); }
+}
+
 
 /* Global */
 
@@ -59,13 +79,10 @@ html, body {
     font-size: @font-size-base;
     margin: 0;
     padding: 0;
+    min-width: 300px;
     position: relative;
-    overflow: hidden;
-    width: 300px;
-}
-
-body {
     transition: 0.10s height;
+    overflow: hidden;
 }
 
 body * {
@@ -83,18 +100,31 @@ a, a:hover, a:active {
 
 .panel {
     background: @body-bg;
-    position: fixed;
     height: 100%;
-    width: 100%;
-    transition: 0.20s transform;
+    width: 100vw;
+    bottom: 0;
 }
 
-.panel:target {
-    transform: translateX(0);
+#main.panel.ng-enter {
+    animation: slideInLeft 0.20s;
+    z-index: 8888;
 }
 
-.panel:not(:target):not(:first-of-type) {
-    transform: translateX(100vw);
+#main.panel.ng-leave {
+    animation: slideOutLeft 0.20s;
+    z-index: 9999;
+    position: absolute;
+}
+
+.panel.ng-enter:not(#main) {
+    animation: slideInRight 0.20s;
+    z-index: 8888;
+}
+
+.panel.ng-leave:not(#main) {
+    animation: slideOutRight 0.20s;
+    z-index: 9999;
+    position: absolute;
 }
 
 /* Panel Section */
@@ -145,7 +175,6 @@ a, a:hover, a:active {
 
 .panel-section-body {
     flex-direction: column;
-    width: 100vw;
     overflow-y: auto;
     overflow-x: hidden;
 }

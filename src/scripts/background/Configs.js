@@ -12,29 +12,51 @@ const Configs = (() => {
         'get': function (configUUID) {
             console.log('[Background] Configs.get()', configUUID);
 
-            return browser.storage.sync.get('Configurations').then((data) => {
-                const configs = data.Configurations;
-                console.log('[Background] Configs.get() :: Configurations', configs);
+            return this.getAll().then((configs) => {
+                let config;
 
-                if (configs !== undefined && configs !== null && configs.length) {
-                    return configs.find(c => c.UUID === configUUID);
+                if (configs.length) {
+                    config = configs.find(c => c.UUID === configUUID);
                 }
 
-                return;
+                console.log('[Background] Configs.get() :: Return', config);
+                return config;
             });
         },
 
+        /**
+         * Returns all saved configs
+         * @returns {Object[]} The saved configs
+         */
+        'getAll': function() {
+            console.log('[Background] Configs.getAll()');
+
+            return browser.storage.sync.get('Configurations').then((data) => {
+                let configs = data.Configurations;
+
+                if (configs === undefined || configs === null) {
+                    configs = [];
+                }
+
+                console.log('[Background] Configs.getAll() :: Return', configs);
+                return configs;
+            });
+        },
+
+        /**
+         * Returns all saved configs that are enabled
+         * @returns {Object[]} The saved configs that are enabled
+         */
         'getAllEnabled': function() {
             console.log('[Background] Configs.getAllEnabled()');
 
-            return browser.storage.sync.get('Configurations').then((data) => {
-                const configs = data.Configurations;
-
-                if (configs !== undefined && configs !== null && configs.length) {
-                    return configs.filter(c => c.Enabled !== false);
+            return this.getAll().then((configs) => {
+                if (configs.length) {
+                    configs = configs.filter(c => c.Enabled !== false);
                 }
 
-                return [];
+                console.log('[Background] Configs.getAllEnabled() :: Return', configs);
+                return configs;
             });
         },
 
@@ -46,8 +68,7 @@ const Configs = (() => {
         'remove': function (configUUID) {
             console.log('[Background] Configs.remove()', configUUID);
 
-            return browser.storage.sync.get('Configurations').then((data) => {
-                const configs = data.Configurations;
+            return this.getAll().then((configs) => {
                 console.log('[Background] Configs.remove() :: Configurations', configs);
 
                 if (configs !== undefined && configs !== null && configs.length) {

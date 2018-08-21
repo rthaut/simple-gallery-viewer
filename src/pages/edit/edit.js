@@ -52,18 +52,17 @@ app.controller('EditConfigurationCtrl', ['$scope', 'uuid', function ($scope, uui
         const UUID = params.get('UUID');
 
         if (UUID !== null && UUID.length) {
-            const {
-                'Configurations': configurations
-            } = await browser.storage.sync.get('Configurations');
-
-            if (configurations !== undefined && configurations.length) {
-                const config = configurations.find(config => config.UUID === UUID);
-
-                if (config !== undefined) {
-                    $scope.action = 'Update';
-                    $scope.model = angular.copy(config);
-                    $scope.$apply();
+            const config = await browser.runtime.sendMessage({
+                'action': 'get-config',
+                'data': {
+                    'configUUID': UUID
                 }
+            });
+
+            if (config !== undefined) {
+                $scope.action = 'Update';
+                $scope.model = angular.copy(config);
+                $scope.$apply();
             }
         }
     })();

@@ -1,190 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="SimpleGalleryViewer.Popup" ng-csp ng-controller="PopupController">
 
     <head>
         <meta charset="utf-8">
         <title>Simple Gallery Viewer</title>
+
     </head>
 
     <body>
 
-        <div class="panel" id="main">
-
-            <div class="panel-section panel-section-header">
-
-                <div class="icon-section-header"></div>
-                <div class="text-section-header">Simple Gallery Viewer</div>
-
-            </div>
-
-            <div class="panel-section panel-section-body">
-
-                <div class="panel-section panel-section-list">
-
-                    <a class="panel-list-item" href="#configurations">
-                        <div class="text">Manage Configurations</div>
-                        <div class="icon arrow-right"></div>
-                    </a>
-
-                    <div class="panel-section-separator"></div>
-
-                    <div class="panel-list-item disabled">
-                        <div class="text text-muted">Options</div>
-                    </div>
-
-                    <div class="panel-list-item">
-                        <div class="text">
-                            <span class="toggle toggle-block toggle-right toggle-primary">
-                                <input type="checkbox" id="thumbnails" name="ThumbnailsEnabled" checked disabled>
-                                <label for="thumbnails">Show Thumbnails</label>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="panel-list-item">
-                        <div class="text">
-                            <span class="toggle toggle-block toggle-right toggle-primary">
-                                <input type="checkbox" id="slideshow" name="SlideshowLayoutEnabled" disabled>
-                                <label for="slideshow">Use Slideshow Layout</label>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="panel-list-item">
-                        <div class="text">
-                            <span class="toggle toggle-block toggle-right toggle-primary">
-                                <input type="checkbox" id="preload" name="PreloadEnabled" checked disabled>
-                                <label for="preload">Preload Images</label>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="panel-section-separator"></div>
-
-                    <a class="panel-list-item" href="#help">
-                        <div class="text">Help</div>
-                        <div class="icon arrow-right"></div>
-                    </a>
-
-                    <a class="panel-list-item" href="#about">
-                        <div class="text">About</div>
-                        <div class="icon arrow-right"></div>
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="panel" id="configurations">
-
-            <div class="panel-section panel-section-header">
-
-                <a class="button-back" href="#main"></a>
-                <div class="text-section-header">Manage Configurations</div>
-
-            </div>
-
-            <div class="panel-section panel-section-body">
-
-                <div class="panel-section panel-section-list" id="config_list">
-
-                    <a class="panel-list-item" id="create_config">
-                        <div class="text">Create Configuration</div>
-                        <div class="icon plus"></div>
-                    </a>
-
-                    <a class="panel-list-item" href="#import_config">
-                        <div class="text">Import Configuration</div>
-                        <div class="icon arrow-right"></div>
-                    </a>
-
-                    <a class="panel-list-item" href="#export_configs">
-                        <div class="text">Export Configuration(s)</div>
-                        <div class="icon arrow-right"></div>
-                    </a>
-
-                    <div class="panel-section-separator"></div>
-
-                    <!-- Existing Configurations are Inserted Here -->
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="panel" id="help">
-
-            <div class="panel-section panel-section-header">
-
-                <a class="button-back" href="#main"></a>
-                <div class="text-section-header">Help</div>
-
-            </div>
-
-            <div class="panel-section panel-section-body">
-
-                <div class="panel-section panel-section-content">
-
-                    <h4>Configuration</h4>
-                    <p>Can't stop won't stop must configure everything.</p>
-
-                </div>
-
-                <div class="panel-section-separator"></div>
-
-                <div class="panel-section panel-section-content">
-
-                    <h4>Hotkeys</h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr><th>Action</th><th>Hotkey</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Toggle Thumbnails</td><td><kbd>T</kbd></td></tr>
-                            <tr><td>Toggle Fullscreen</td><td><kbd>F</kbd></td></tr>
-                            <tr><td>Toggle Gallery Style</td><td><kbd>G</kbd></td></tr>
-                            <tr><td>Go to Top</td><td><kbd>Home</kbd></td></tr>
-                            <tr><td>Go to Bottom</td><td><kbd>End</kbd></td></tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="panel" id="about">
-
-            <div class="panel-section panel-section-header">
-
-                <a class="button-back" href="#main"></a>
-                <div class="text-section-header">About</div>
-
-            </div>
-
-            <div class="panel-section panel-section-body">
-
-                <div class="panel-section panel-section-content">
-
-                    <h4>Pitchfork taxidermy meggings single-origin coffee.</h4>
-
-                    <p>Raw denim humblebrag vegan four loko, cillum tacos food truck neutra squid laborum coloring book fanny pack tattooed cray. Tumblr gentrify DIY, edison bulb mumblecore lo-fi narwhal tote bag echo park artisan shaman snackwave leggings umami.</p>
-
-                    <p>Offal chambray reprehenderit ethical franzen eu deserunt adaptogen synth meggings yr. Master cleanse etsy meggings pinterest celiac.</p>
-
-                </div>
-
-            </div>
-
-        </div>
+        <div class="panel" id="{{id}}" ng-view></div>
 
         <!-- dependencies -->
         <script src="../../vendor/jquery.min.js"></script>
-        <script src="../../vendor/shoelace.js"></script>
+        <script src="../../vendor/angular.min.js"></script>
+        <script src="../../vendor/angular-animate.min.js"></script>
+        <script src="../../vendor/angular-route.min.js"></script>
+        <script src="../../vendor/angular-sanitize.min.js"></script>
+
     </body>
 
 </html>
