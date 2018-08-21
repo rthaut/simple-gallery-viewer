@@ -2,11 +2,18 @@
 
 const Gallery = (() => {
 
-    const ID = 'SimpleGalleryViewer';   // browser.runtime.id;
+    const ID = 'SimpleGalleryViewer';   // @TODO: use `browser.runtime.id` instead? but then the CSS needs that same ID...
+
+    const DEFAULT_THEME = 'Dark';
 
     const Gallery = {
 
-        'build': function (title, description) {
+        /**
+         * Generates and inserts the core DOM structure for a gallery
+         * @param {string} title The title of the gallery
+         * @param {string} [description] The description of the gallery
+         */
+        'build': async function (title, description = null) {
             console.log('[Content] Gallery.build()', title, description);
 
             let container = jQuery(`#${ID}`);
@@ -17,24 +24,33 @@ const Gallery = (() => {
             }
 
             container = jQuery(`
-                <div id="${ID}" class="collapse in" aria-expanded="true">
+                <div id="${ID}">
                     <button type="button" class="close" aria-label="Close" onclick="javascript:jQuery('#${ID}').remove();"><span aria-hidden="true">&times;</span></button>
-                    <div class="container-fluid">
-                        <div class="page-header text-center">
+                    <div id="${ID}Container">
+                        <div id="${ID}Header">
                             <h1>${title || ''}</h1>
-                            ${description ? '<pclass="lead">' + description + '</p>' : ''}
+                            ${description ? '<p>' + description + '</p>' : ''}
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div id="${ID}Images" class="text-center"></div>
-                            </div>
-                        </div>
+                        <div id="${ID}Images"></div>
+                        <div id="${ID}Footer"></div>
                     </div>
                 </div>
                 `).appendTo('body');
+
             console.log('[Content] Gallery.build() :: Container', container);
+
+            // apply the theme asynchronously after the main structure is built
+            browser.storage.sync.get('Theme').then((data) => {
+                const theme = data.Theme || DEFAULT_THEME;
+                container.removeClass().addClass(`theme--${theme.toLowerCase()}`);
+            });
+
         },
 
+        /**
+         * Inserts images into the gallery
+         * @param {string[]} images The paths of the images
+         */
         'addImages': function(images) {
             console.log('[Content] Gallery.addImages()', images);
 
@@ -47,7 +63,7 @@ const Gallery = (() => {
                         continue;
                     }
 
-                    jQuery(`<p><a href="${images[i]}"><img src="${images[i]}" class="img-responsive img-thumbnail"/></a></p>`).appendTo(`#${ID}Images`);
+                    jQuery(`<p><a href="${images[i]}"><img src="${images[i]}"/></a></p>`).appendTo(`#${ID}Images`);
                 }
             }
         }

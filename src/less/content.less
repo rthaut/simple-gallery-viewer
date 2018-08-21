@@ -1,64 +1,119 @@
-div#SimpleGalleryViewer {
-    @import "bootstrap/less/variables.less";
-    @import "bootstrap/less/mixins.less";
+.theme {
+    background-color: var(--base-1);
+    color: var(--base-4);
+}
 
-    @import "bootstrap/less/normalize.less";
-    // @import "bootstrap/less/print.less";
-    // @import "bootstrap/less/glyphicons.less";
+.theme--white {
+    &:extend(.theme);
+    --base-1: #ffffff;
+    --base-2: #f2f2f2;
+    --base-3: #cccccc;
+    --base-4: #333333;
+}
+.theme--light {
+    &:extend(.theme);
+    --base-1: #f2f2f2;
+    --base-2: #dadada;
+    --base-3: #aaaaaa;
+    --base-4: #000000;
+}
+.theme--dark {
+    &:extend(.theme);
+    --base-1: #000000;
+    --base-2: #333333;
+    --base-3: #999999;
+    --base-4: #ffffff;
+}
+.theme--blue {
+    &:extend(.theme);
+    --base-1: #337ab7;
+    --base-2: #337ab7;
+    --base-3: #ffffff;
+    --base-4: #ffffff;
+}
 
-    @import "bootstrap/less/scaffolding.less";
-    @import "bootstrap/less/type.less";
-    // @import "bootstrap/less/code.less";
-    @import "bootstrap/less/grid.less";
-    // @import "bootstrap/less/tables.less";
-    // @import "bootstrap/less/forms.less";
-    // @import "bootstrap/less/buttons.less";
+body {
+    position: relative;
+}
 
-    // @import "bootstrap/less/button-groups.less";
-    // @import "bootstrap/less/input-groups.less";
-    // @import "bootstrap/less/navs.less";
-    // @import "bootstrap/less/navbar.less";
-    // @import "bootstrap/less/breadcrumbs.less";
-    // @import "bootstrap/less/pagination.less";
-    // @import "bootstrap/less/pager.less";
-    // @import "bootstrap/less/labels.less";
-    // @import "bootstrap/less/badges.less";
-    // @import "bootstrap/less/jumbotron.less";
-    // @import "bootstrap/less/thumbnails.less";
-    // @import "bootstrap/less/alerts.less";
-    // @import "bootstrap/less/progress-bars.less";
-    // @import "bootstrap/less/media.less";
-    // @import "bootstrap/less/list-group.less";
-    // @import "bootstrap/less/panels.less";
-    // @import "bootstrap/less/responsive-embed.less";
-    // @import "bootstrap/less/wells.less";
-    @import "bootstrap/less/close.less";
+#SimpleGalleryViewer {
+    @import "includes/_reset";
 
-    // @import "bootstrap/less/modals.less";
-    // @import "bootstrap/less/tooltip.less";
-    // @import "bootstrap/less/popovers.less";
-    // @import "bootstrap/less/carousel.less";
-
-    @import "bootstrap/less/utilities.less";
-    @import "bootstrap/less/responsive-utilities.less";
+    box-sizing: border-box;
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
 
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    // min-width: 100vw;
     min-height: 100vh;
-    z-index: @zindex-modal-background;
+    z-index: 10000;
 
-    font-size: 10px;
-    font-family: @font-family-base;
-    font-size: @font-size-base;
-    line-height: @line-height-base;
-    color: @text-color;
-    background-color: @body-bg;
-}
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1rem;
+    background-color: var(--base-1);
+    color: var(--base-4);
 
-body {
-    position: relative;
+    button.close {
+        float: right;
+        font-size: 2rem;
+        font-weight: bold;
+        line-height: 1rem;
+        background: transparent;
+        color: var(--base-3);
+        border: 0;
+        margin: 1rem;
+        padding: 0;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            color: var(--base-4);
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+
+    #SimpleGalleryViewerContainer {
+        margin: 1rem;
+
+        #SimpleGalleryViewerHeader {
+            width: calc(100% - (1rem * 2));
+            margin: 2rem 0 3rem;
+
+            h1 {
+                text-align: center;
+                font-size: 1.75rem;
+                line-height: 1.75rem;
+            }
+        }
+
+        #SimpleGalleryViewerImages {
+            & > p {
+                text-align: center;
+                margin-bottom: 1rem;
+
+                img {
+                    display: inline-block;
+                    max-width: 100%;
+                    height: auto;
+
+                    padding: 4px;
+                    border: 1px solid var(--base-2);
+                }
+
+                a:hover img {
+                    border-color: var(--base-3);
+                }
+            }
+        }
+
+        #SimpleGalleryViewerFooter {
+            margin: 3rem 0 2rem;
+        }
+    }
 }
