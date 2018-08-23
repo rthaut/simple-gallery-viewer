@@ -15,7 +15,7 @@
 @import "bootstrap/less/forms.less";
 @import "bootstrap/less/buttons.less";
 
-// @import "bootstrap/less/button-groups.less";
+@import "bootstrap/less/button-groups.less";
 // @import "bootstrap/less/input-groups.less";
 // @import "bootstrap/less/navs.less";
 // @import "bootstrap/less/navbar.less";
@@ -65,7 +65,6 @@
     to      { transform: translateX(0); }
 }
 
-
 /* Global */
 
 html, body {
@@ -88,12 +87,7 @@ html, body {
 body * {
     box-sizing: border-box;
     text-align: start;
-}
-
-a, a:hover, a:active {
-    color: @text-color;
-    cursor: default;
-    text-decoration: none;
+    cursor: default !important;
 }
 
 /* Panel */
@@ -103,28 +97,31 @@ a, a:hover, a:active {
     height: 100%;
     width: 100vw;
     bottom: 0;
-}
 
-#main.panel.ng-enter {
-    animation: slideInLeft 0.20s;
-    z-index: 8888;
-}
+    &.ng-enter {
+        z-index: 8888;
 
-#main.panel.ng-leave {
-    animation: slideOutLeft 0.20s;
-    z-index: 9999;
-    position: absolute;
-}
+        .slide-left & {
+            animation: slideInLeft 0.20s;
+        }
 
-.panel.ng-enter:not(#main) {
-    animation: slideInRight 0.20s;
-    z-index: 8888;
-}
+        .slide-right & {
+            animation: slideInRight 0.20s;
+        }
+    }
 
-.panel.ng-leave:not(#main) {
-    animation: slideOutRight 0.20s;
-    z-index: 9999;
-    position: absolute;
+    &.ng-leave {
+        z-index: 9999;
+        position: absolute;
+
+        .slide-left & {
+            animation: slideOutRight 0.20s;
+        }
+
+        .slide-right & {
+            animation: slideOutLeft 0.20s;
+        }
+    }
 }
 
 /* Panel Section */
@@ -164,6 +161,12 @@ a, a:hover, a:active {
         border: 1px solid rgba(0, 0, 0, 0.2);
     }
 
+    .icon-section-header {
+        height: 32px;
+        margin-right: 16px;
+        width: 32px;
+    }
+
     .text-section-header {
         align-self: center;
         font-size: 1.385em;
@@ -191,6 +194,12 @@ a, a:hover, a:active {
 .panel-section-list {
     flex-direction: column;
     padding: 4px 0;
+
+    a, a:hover, a:active {
+        color: @text-color;
+        cursor: default;
+        text-decoration: none;
+    }
 }
 
 .panel-list-item {

@@ -1,17 +1,24 @@
-/* eslint-env browser, webextensions */
-
 export default class MainController {
 
     constructor($scope) {
         this.scope = $scope;
 
-        this.scope.id = 'main';
-
         this.GetSettings();
+
+        const labels = [
+            'ExtensionName',
+            'ManageConfigsHeading',
+            'OptionsHeading',
+            'HelpHeading',
+            'AboutHeading',
+        ];
+
+        this.scope.labels = {};
+        labels.forEach(label => this.scope.labels[label] = browser.i18n.getMessage(label));
     }
 
     async GetSettings() {
-        this.settings = Object.assign({},
+        const settings = Object.assign({},
 
             // these are the defaults
             {
@@ -29,19 +36,27 @@ export default class MainController {
             ])
         );
 
+        this.scope.settings = [];
+        for (const setting in settings) {
+            this.scope.settings.push({
+                'Name': setting,
+                'Enabled': settings[setting],
+                'Label': browser.i18n.getMessage(`Setting_${setting}_Label`)
+            });
+        }
+
         this.scope.$apply();
     }
 
     ToggleSetting(name) {
-        const value = this.settings[name];
-        console.log(`Changing "${name}" setting to`, value ? 'true' : 'false');
+        const setting = this.scope.settings.find(s => s.Name === name);
 
-        const setting = {};
-        setting[name] = value;
-        browser.storage.sync.set(setting).catch((error) => {
-            console.error(`Failed to save "${name}" setting`, error);
+        const obj = {};
+        obj[name] = setting.Enabled;
+        browser.storage.sync.set(obj).catch((error) => {
             // reset the toggle's state
-            this.settings[name] = !value;
+            setting.Enabled = !setting.Enabled;
+            this.scope.settings.splice(this.scope.settings.findIndex(s => s.Name === name), 1, setting);
             this.scope.$apply();
         });
     }

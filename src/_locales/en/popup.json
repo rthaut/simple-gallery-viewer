@@ -1,0 +1,56 @@
+{
+
+  "ManageConfigsHeading": {
+    "message": "Manage Configurations"
+  },
+
+  "OptionsHeading": {
+    "message": "Options"
+  },
+
+  "HelpHeading": {
+    "message": "Help"
+  },
+
+  "AboutHeading": {
+    "message": "About"
+  },
+
+  "CreateConfigHeading": {
+    "message": "Create Configuration"
+  },
+
+  "ImportConfigsHeading": {
+    "message": "Import Configuration(s)"
+  },
+
+  "ExportConfigsHeading": {
+    "message": "Export Configuration(s)"
+  },
+
+  "ExportButtonLabel": {
+    "message": "Export Selected Config(s)"
+  },
+
+  "ExportGeneratingFile": {
+    "message": "Generating Export File..."
+  },
+
+  "ExportConfigsError": {
+    "message": "An error occurred while exporting configurations: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "ExportSelectAll": {
+    "message": "Select All"
+  },
+
+  "ExportDeselectAll": {
+    "message": "Clear Selection"
+  }
+
+}

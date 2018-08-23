@@ -43,6 +43,17 @@ const Configs = (() => {
             });
         },
 
+        'getMany': function(configUUIDs) {
+            console.log('[Background] Configs.getMany()', configUUIDs);
+
+            return this.getAll().then((configs) => {
+                configs = configs.filter(c => configUUIDs.indexOf(c.UUID) > -1);
+
+                console.log('[Background] Configs.getMany() :: Return', configs);
+                return configs;
+            });
+        },
+
         /**
          * Returns all saved configs that are enabled
          * @returns {Object[]} The saved configs that are enabled

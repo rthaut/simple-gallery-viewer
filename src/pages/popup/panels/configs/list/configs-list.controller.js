@@ -1,11 +1,19 @@
-/* eslint-env browser, webextensions */
-
 export default class ConfigsListController {
 
     constructor($scope) {
+        this.scope = $scope;
+
         this.GetConfigs();
 
-        this.scope = $scope;
+        const labels = [
+            'ManageConfigsHeading',
+            'CreateConfigHeading',
+            'ExportConfigsHeading',
+            'ImportConfigsHeading',
+        ];
+
+        this.scope.labels = {};
+        labels.forEach(label => this.scope.labels[label] = browser.i18n.getMessage(label));
     }
 
     async GetConfigs() {

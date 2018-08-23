@@ -1,26 +1,21 @@
-<div class="panel-section panel-section-header">
-
-    <a class="button-back" href="#!/"></a>
-    <div class="text-section-header">Manage Configurations</div>
-
-</div>
+<panel-header back-button-path="/" header-text="{{labels.ManageConfigsHeading}}"></panel-header>
 
 <div class="panel-section panel-section-body">
 
-    <div class="panel-section panel-section-list" id="config_list">
+    <div class="panel-section panel-section-list">
 
-        <a class="panel-list-item" id="create_config" ng-click="ctrl.EditConfig()">
-            <div class="text">Create Configuration</div>
+        <a class="panel-list-item" ng-click="ctrl.EditConfig()">
+            <div class="text">{{labels.CreateConfigHeading}}</div>
             <div class="icon plus"></div>
         </a>
 
-        <a class="panel-list-item" href="#!/configs/import">
-            <div class="text">Import Configuration</div>
+        <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/configs/import'})">
+            <div class="text">{{labels.ImportConfigsHeading}}</div>
             <div class="icon arrow-right"></div>
         </a>
 
-        <a class="panel-list-item" href="#!/configs/export">
-            <div class="text">Export Configuration(s)</div>
+        <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/configs/export'})">
+            <div class="text">{{labels.ExportConfigsHeading}}</div>
             <div class="icon arrow-right"></div>
         </a>
 

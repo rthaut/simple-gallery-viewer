@@ -1,0 +1,25 @@
+<panel-header back-button-path="/configs/list" header-text="{{labels.ExportConfigsHeading}}"></panel-header>
+
+<div class="panel-section panel-section-body">
+
+    <div class="panel-section panel-section-content">
+
+        <p>
+            <a class="link" ng-click="ctrl.SelectAll()">{{labels.ExportSelectAll}}</a>,
+            <a class="link" ng-click="ctrl.DeselectAll()">{{labels.ExportDeselectAll}}</a>
+        </p>
+
+        <form>
+            <div class="checkbox" ng-repeat="config in configs">
+                <label>
+                    <input type="checkbox" ng-model="selected[config.UUID]"> {{config.Name}}
+                </label>
+            </div>
+
+            <br/>
+            <button type="button" class="btn btn-primary" ng-click="ctrl.ExportConfigs($event)" ng-disabled="!ctrl.ExportButtonEnabled()">{{labels.ExportButtonLabel}}</button>
+        </form>
+
+    </div>
+
+</div>

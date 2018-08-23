@@ -24,6 +24,9 @@ browser.runtime.onMessage.addListener((message, sender) => {
         case 'get-enabled-configs':
             return Configs.getAllEnabled();
 
+        case 'export-configs':
+            return Configs.getMany(message.data.configUUIDs);
+
         case 'close-config-editor':
             if (message.data !== undefined && message.data.tabId !== undefined) {
                 return browser.tabs.remove(message.data.tabId);

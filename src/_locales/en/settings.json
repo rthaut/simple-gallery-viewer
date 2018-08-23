@@ -1,0 +1,19 @@
+{
+
+  "Setting_StickyFooter_Label": {
+    "message": "Use Sticky Footer"
+  },
+
+  "Setting_ThumbnailsEnabled_Label": {
+    "message": "Show Thumbnails"
+  },
+
+  "Setting_SlideshowLayoutEnabled_Label": {
+    "message": "Display Images as a Slideshow"
+  },
+
+  "Setting_PreloadEnabled_Label": {
+    "message": "Preload Images"
+  }
+
+}

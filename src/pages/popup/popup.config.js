@@ -1,19 +1,22 @@
 /* eslint-env browser, jquery, webextensions */
 
-import MainPanelCtrl from './panels/main/main.controller';
+import MainPanelCtrl from './panels/main/main.controller.js';
 import MainPanelTmpl from './panels/main/main.template.html';
 
-import AboutPanelCtrl from './panels/about/about.controller';
+import AboutPanelCtrl from './panels/about/about.controller.js';
 import AboutPanelTmpl from './panels/about/about.template.html';
 
-import HelpPanelCtrl from './panels/help/help.controller';
+import HelpPanelCtrl from './panels/help/help.controller.js';
 import HelpPanelTmpl from './panels/help/help.template.html';
 
-import ConfigListPanelCtrl from './panels/configs/list/configslist.controller';
-import ConfigListPanelTmpl from './panels/configs/list/configslist.template.html';
+import ConfigListPanelCtrl from './panels/configs/list/configs-list.controller.js';
+import ConfigListPanelTmpl from './panels/configs/list/configs-list.template.html';
 
-config.$inject = ['$compileProvider', '$locationProvider', '$routeProvider'];
-export default function config($compileProvider, $locationProvider, $routeProvider) {
+import ConfigExportPanelCtrl from './panels/configs/export/configs-export.controller.js';
+import ConfigExportPanelTmpl from './panels/configs/export/configs-export.template.html';
+
+config.$inject = ['$compileProvider', '$routeProvider'];
+export default function config($compileProvider, $routeProvider) {
 
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|chrome-extension|moz-extension):|data:image\//);
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|chrome-extension|moz-extension):/);
@@ -38,7 +41,10 @@ export default function config($compileProvider, $locationProvider, $routeProvid
             'template': ConfigListPanelTmpl,
             'controller': ConfigListPanelCtrl,
             'controllerAs': 'ctrl'
+        })
+        .when('/configs/export', {
+            'template': ConfigExportPanelTmpl,
+            'controller': ConfigExportPanelCtrl,
+            'controllerAs': 'ctrl'
         });
-
-    //$locationProvider.html5Mode(true);
 }

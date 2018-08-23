@@ -1,43 +1,38 @@
-<div class="panel-section panel-section-header">
-
-    <div class="icon-section-header"></div>
-    <div class="text-section-header">Simple Gallery Viewer</div>
-
-</div>
+<panel-header header-icon="../../images/logo-32.png" header-text="{{labels.ExtensionName}}"></panel-header>
 
 <div class="panel-section panel-section-body">
 
     <div class="panel-section panel-section-list">
 
-        <a class="panel-list-item" href="#!/configs/list">
-            <div class="text">Manage Configurations</div>
+        <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/configs/list'})">
+            <div class="text">{{labels.ManageConfigsHeading}}</div>
             <div class="icon arrow-right"></div>
         </a>
 
         <div class="panel-section-separator"></div>
 
         <div class="panel-list-item disabled">
-            <div class="text text-muted">Options</div>
+            <div class="text text-muted">{{labels.OptionsHeading}}</div>
         </div>
 
-        <div class="panel-list-item" ng-repeat="(name, value) in ctrl.settings">
+        <div class="panel-list-item" ng-repeat="setting in settings">
             <div class="text">
                 <span class="toggle toggle-block toggle-right toggle-primary">
-                    <input type="checkbox" id="{{name}}" ng-model="ctrl.settings[name]" ng-change="ctrl.ToggleSetting(name)" ng-checked="value">
-                    <label for="{{name}}">{{name}}</label>
+                    <input type="checkbox" id="{{setting.Name}}" ng-model="setting.Enabled" ng-change="ctrl.ToggleSetting(setting.Name)" ng-checked="setting.Enabled">
+                    <label for="{{setting.Name}}">{{setting.Label}}</label>
                 </span>
             </div>
         </div>
 
         <div class="panel-section-separator"></div>
 
-        <a class="panel-list-item" href="#!/help">
-            <div class="text">Help</div>
+        <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/help'})">
+            <div class="text">{{labels.HelpHeading}}</div>
             <div class="icon arrow-right"></div>
         </a>
 
-        <a class="panel-list-item" href="#!/about">
-            <div class="text">About</div>
+        <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/about'})">
+            <div class="text">{{labels.AboutHeading}}</div>
             <div class="icon arrow-right"></div>
         </a>
 

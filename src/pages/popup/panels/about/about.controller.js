@@ -1,9 +1,7 @@
-/* eslint-env browser, webextensions */
-
 export default class AboutController {
 
     constructor($scope) {
-
+        this.scope = $scope;
     }
 
 }
