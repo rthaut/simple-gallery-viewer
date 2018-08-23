@@ -3,15 +3,13 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    'mode': 'development',
-    'devtool': 'source-map',
     'module': {
         'rules': [
             {
                 'test': /\.less$/,
                 'use': [
                     {
-                        'loader': require('mini-css-extract-plugin').loader,
+                        'loader': MiniCssExtractPlugin.loader,
                     },
                     {
                         'loader': 'css-loader'

@@ -19,7 +19,6 @@ const $ = require('gulp-load-plugins')({
         'gulp-if': 'if',
         'merge-stream': 'merge',
         'rollup-stream': 'rollup',
-        'webpack-stream': 'webpack',
         'vinyl-buffer': 'buffer',
         'vinyl-source-stream': 'source',
     },
@@ -29,10 +28,6 @@ const $ = require('gulp-load-plugins')({
     }
 });
 
-
-
-// TODO: the minify process should attempt to concatenate all of the linked components for the pages (ala useref?)
-// TODO: all functions should be named to avoid <anonymous> in output - the build functions (after linting) are the problematic ones
 
 
 /* ==================== HELPER FUNCTIONS ==================== */
@@ -63,22 +58,70 @@ function lint(dir, fix = true, failOnError = true) {
     ]);
 }
 
+/**
+ * Returns a configuration object for webpack for the supplied directory
+ * @param {string} dir the path to a directory
+ * @returns {Object} a webpack config
+ */
+function getWebpackConfig(dir) {
+    // NOTE: the webpack.config.js file contains basic configuration that does not require any dynamic values
+    const config = require(`${dir}/webpack.config.js`);
+
+    switch (process.env.NODE_ENV) {
+        case 'production':
+            config.mode = 'production';
+            config.devtool = 'none';
+            break;
+
+        case 'development':
+        default:
+            config.mode = 'development';
+            config.devtool = 'inline-source-map';
+            break;
+    }
+
+    const entry = config.entry || {};
+    const plugins = config.plugins || [];
+
+    folders(dir).map((folder) => {
+        // define an entry point for each folder that has a matching .js and .html files
+        if (fs.existsSync(`${dir}/${folder}/${folder}.js`) && fs.existsSync(`${dir}/${folder}/${folder}.html`)) {
+            entry[folder] = `${dir}/${folder}/${folder}.js`;
+
+            // one html-webpack-plugin instance is needed for each entry point, as the plugin does not support template strings
+            // (see: https://github.com/jantimon/html-webpack-plugin/issues/218#issuecomment-183066602)
+            plugins.push(new HtmlWebpackPlugin({
+                'template': `${dir}/${folder}/${folder}.html`,
+                'chunks': [folder],     // ensure this instance only builds when processing the corresponding folder's entry point
+                'filename': `${folder}/${folder}.html`  // equivalent to '[name]/[name].html'
+            }));
+        }
+    });
+
+    return Object.assign(config, { 'entry': entry, 'plugins': plugins });
+}
+
 
 
 /* ====================  BUILD TASKS  ==================== */
 
-gulp.task('minify', () => {
-    return $.pump([
-        gulp.src(['./dist/**/*.{css,js}', '!./dist/*/vendor/**/*', '!./dist/**/*.min.*', ]),
-        $.if(['**/*.css'], $.postcss()), // options are loaded from postcss.config.js automatically
-        $.if(['**/*.js'], $.uglify(cfg.plugin_options.uglify)),
-        // TODO: the filenames SHOULD include .min, but we would need to update the paths in both the HTML files and the manifests
-        //$.rename({ 'suffix': '.min' }),
+gulp.task('minify', function minify() {
+    return $.pump(
+        $.merge([
+            $.pump([
+                gulp.src(['./dist/*/css/*.css']),
+                $.cssnano(cfg.plugin_options.cssnano)
+            ]),
+            $.pump([
+                gulp.src(['./dist/*/scripts/*.js']),
+                $.uglify(cfg.plugin_options.uglify),
+            ]),
+        ]),
         $.header(fs.readFileSync('./src/banner.txt', 'utf8'), {
             'pkg': pkg
         }),
-        gulp.dest('./dist'),
-    ]);
+        gulp.dest('./dist')
+    );
 });
 
 // ==========================================
@@ -86,7 +129,7 @@ gulp.task('minify', () => {
 // ==========================================
 
 
-gulp.task('build:images', () => {
+gulp.task('build:images', function build_images() {
     return $.pump([
         gulp.src([`${cfg.source_folders.images}/**/*.{png,svg}`]),
         ...Object.keys(cfg.supported_browsers).map(browser => gulp.dest(`./dist/${browser}/images`)),
@@ -94,7 +137,7 @@ gulp.task('build:images', () => {
 });
 
 
-gulp.task('build:less', () => {
+gulp.task('build:less', function build_less() {
     return $.merge(Object.keys(cfg.supported_browsers).map((browser) => {
         return $.pump([
             gulp.src([`${cfg.source_folders.less}/*.less`]),
@@ -109,7 +152,7 @@ gulp.task('build:less', () => {
 /**
  * Creates multiple resized PNG versions of the SVG logo files
  */
-gulp.task('build:logos', () => {
+gulp.task('build:logos', function build_logos() {
     // TODO: handle the icons/sizes defined in page_action.default_icon for Edge
     const manifest = JSON.parse(fs.readFileSync(`${cfg.source_folders.manifests}/manifest.shared.json`));
     const icons = manifest.icons;
@@ -128,7 +171,7 @@ gulp.task('build:logos', () => {
 });
 
 
-gulp.task('build:locales', () => {
+gulp.task('build:locales', function build_locales() {
     return $.merge(folders(cfg.source_folders.locales).map((folder) => {
         return $.pump([
             gulp.src([`${cfg.source_folders.locales}/${folder}/**/*.json`]),
@@ -141,7 +184,7 @@ gulp.task('build:locales', () => {
 });
 
 
-gulp.task('build:manifests', () => {
+gulp.task('build:manifests', function build_manifests() {
     return $.merge(Object.keys(cfg.supported_browsers).map((browser) => {
         return $.pump([
             gulp.src([
@@ -160,40 +203,23 @@ gulp.task('build:manifests', () => {
 });
 
 
-gulp.task('lint:pages', () => {
+gulp.task('lint:pages', function lint_pages() {
     return lint(cfg.source_folders.pages, true, false);
 });
-gulp.task('build:pages', gulp.series('lint:pages', () => {
-    // NOTE: the webpack.config.js file in the pages folder contains basic configuration that does not require any dynamic values
-    const config = require(`${cfg.source_folders.pages}/webpack.config.js`);
-
-    const entry = config.entry || {};
-    const plugins = config.plugins || [];
-
-    folders(cfg.source_folders.pages).map((folder) => {
-        // define an entry point for each page (i.e. each sub-folder in the pages folder)
-        entry[folder] = `${cfg.source_folders.pages}/${folder}/${folder}.js`;
-
-        // one html-webpack-plugin instance is needed for each entry point, as the plugin does not support template strings in paths
-        // (see: https://github.com/jantimon/html-webpack-plugin/issues/218#issuecomment-183066602)
-        plugins.push(new HtmlWebpackPlugin({
-            'template': `${cfg.source_folders.pages}/${folder}/${folder}.html`,
-            'chunks': [folder],     // ensure this instance only builds when processing the corresponding page/folder entry point
-            'filename': `${folder}/${folder}.html`  // equivalent to '[name]/[name].html'
-        }));
-    });
+gulp.task('build:pages', gulp.series('lint:pages', function build_pages() {
+    const config = getWebpackConfig(cfg.source_folders.pages);
 
     return $.pump([
-        $.webpack(Object.assign(config, { 'entry': entry, 'plugins': plugins })),
+        $.webpackStream(config, $.webpack),
         ...Object.keys(cfg.supported_browsers).map(browser => gulp.dest(`./dist/${browser}/pages`)),
     ]);
 }));
 
 
-gulp.task('lint:scripts', () => {
+gulp.task('lint:scripts', function lint_scripts() {
     return lint(cfg.source_folders.scripts, true, false);
 });
-gulp.task('build:scripts', gulp.series('lint:scripts', () => {
+gulp.task('build:scripts', gulp.series('lint:scripts', function build_scripts() {
     return $.merge(folders(cfg.source_folders.scripts).map((folder) => {
         return $.pump([
             $.rollup({
@@ -209,7 +235,7 @@ gulp.task('build:scripts', gulp.series('lint:scripts', () => {
 }));
 
 
-gulp.task('build:vendor', () => {
+gulp.task('build:vendor', function build_vendor() {
     return $.pump([
         gulp.src(cfg.vendor_files),
         ...Object.keys(cfg.supported_browsers).map(browser => gulp.dest(`./dist/${browser}/vendor`)),
@@ -217,7 +243,7 @@ gulp.task('build:vendor', () => {
 });
 
 
-gulp.task('build:vendor:fixes', () => {
+gulp.task('build:vendor:fixes', function build_vendor_fixes() {
     return $.merge(Object.keys(cfg.supported_browsers).map((browser) => {
         return $.pump([
             gulp.src([
@@ -237,7 +263,7 @@ gulp.task('build:vendor:fixes', () => {
 // ========================
 // package/distribute tasks
 // ========================
-gulp.task('zip', () => {
+gulp.task('zip', function zip() {
     return $.merge(Object.keys(cfg.supported_browsers).map((browser) => {
         return $.pump([
             gulp.src([`./dist/${browser}/**/*`, '!Thumbs.db']),
@@ -268,12 +294,11 @@ gulp.task('build', gulp.parallel(
     gulp.series('build:vendor', 'build:vendor:fixes')
 ));
 
-gulp.task('watch', (callback) => {
+gulp.task('watch',  function watch(callback) {
     $.watch(`${cfg.source_folders.less}/**/*`, gulp.series('build:less'));
     $.watch(`${cfg.source_folders.locales}/**/*`, gulp.series('build:locales'));
     $.watch(`${cfg.source_folders.manifests}/**/*`, gulp.series('build:manifests'));
-    // TODO: since pages are built via webpack, it probably makes more sense to let webpack do the watch instead...
-    $.watch(`${cfg.source_folders.pages}/**/*`, gulp.series('build:pages'));
+    $.watch(`${cfg.source_folders.pages }/**/*`, gulp.series('build:pages'));
     $.watch(`${cfg.source_folders.scripts }/**/*.js`, gulp.series('build:scripts'));
 
     callback();

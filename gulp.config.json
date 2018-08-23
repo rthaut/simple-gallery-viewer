@@ -27,6 +27,9 @@
     "./node_modules/webextension-polyfill/dist/browser-polyfill.min.js"
   ],
   "plugin_options": {
+    "cssnano": {
+      "zindex": false
+    },
     "less": {
       "paths": "node_modules",
       "outputStyle": "compressed",
