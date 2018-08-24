@@ -16,14 +16,14 @@ const Gallery = (() => {
         'build': async function (title, description = null) {
             console.log('[Content] Gallery.build()', title, description);
 
-            let container = jQuery(`#${ID}`);
+            let base = jQuery(`#${ID}`);
 
-            if (container !== undefined && container !== null && container.length) {
-                console.warn('[Content] Gallery.build() :: Container already exists', container);
-                container.remove();
+            if (base !== undefined && base !== null && base.length) {
+                console.warn('[Content] Gallery.build() :: Container already exists', base);
+                base.remove();
             }
 
-            container = jQuery(`
+            base = jQuery(`
                 <div id="${ID}">
                     <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div id="${ID}Container">
@@ -35,18 +35,28 @@ const Gallery = (() => {
                         <div id="${ID}Footer"></div>
                     </div>
                 </div>
-                `).appendTo('body');
+            `).appendTo('body');
 
-            console.log('[Content] Gallery.build() :: Container', container);
+            const container = base.find(`#${ID}Container`).first();
 
-            container.find('button.close').on('click', function (event) {
+            base.find('button.close').on('click', function (event) {
                 jQuery(`#${ID}`).remove();
             });
 
-            // apply the theme asynchronously after the main structure is built
-            browser.storage.sync.get('Theme').then((data) => {
+            // apply the theme and settings asynchronously after the main structure is built
+            browser.storage.sync.get([
+                'Theme',
+                'StickyFooter',
+                'ThumbnailsEnabled',
+                'SlideshowLayoutEnabled',
+                'PreloadEnabled',
+            ]).then((data) => {
                 const theme = data.Theme || DEFAULT_THEME;
-                container.removeClass().addClass(`theme--${theme.toLowerCase()}`);
+                base.removeClass().addClass(`theme--${theme.toLowerCase()}`);
+                container.toggleClass('sticky-footer', data.StickyFooter);
+                container.toggleClass('show-thumbnails', data.ThumbnailsEnabled);
+                container.toggleClass('slideshow-layout', data.SlideshowLayoutEnabled);
+                container.toggleClass('preload-images', data.PreloadEnabled);
             });
 
         },
@@ -63,7 +73,7 @@ const Gallery = (() => {
                     const img = jQuery(`#${ID}Images img[src="${images[i]}"]`);
 
                     if (img !== undefined && img !== null && img.length) {
-                        console.warn('[Content] Gallery.addImages() :: Image already exists', img);
+                        console.warn('[Content] Gallery.addImages() :: Image already exists', img.first());
                         continue;
                     }
 

@@ -1,31 +1,28 @@
-.theme {
-    background-color: var(--base-1);
-    color: var(--base-4);
-}
-
 .theme--white {
-    &:extend(.theme);
     --base-1: #ffffff;
     --base-2: #f2f2f2;
     --base-3: #cccccc;
     --base-4: #333333;
 }
 .theme--light {
-    &:extend(.theme);
     --base-1: #f2f2f2;
     --base-2: #dadada;
     --base-3: #aaaaaa;
     --base-4: #000000;
 }
 .theme--dark {
-    &:extend(.theme);
+    --base-1: #111111;
+    --base-2: #222222;
+    --base-3: #888888;
+    --base-4: #AAAAAA;
+}
+.theme--black {
     --base-1: #000000;
     --base-2: #333333;
     --base-3: #999999;
     --base-4: #ffffff;
 }
 .theme--blue {
-    &:extend(.theme);
     --base-1: #337ab7;
     --base-2: #337ab7;
     --base-3: #ffffff;
@@ -48,7 +45,6 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
     min-height: 100vh;
     z-index: 10000;
 
@@ -59,15 +55,19 @@ body {
     color: var(--base-4);
 
     button.close {
-        float: right;
-        font-size: 2rem;
+        position: fixed;
+        top: 0;
+        right: 0;
+        margin: 1rem;
+        padding: 0;
+        z-index: 10001;
+
         font-weight: bold;
+        font-size: 2rem;
         line-height: 1rem;
         background: transparent;
         color: var(--base-3);
         border: 0;
-        margin: 1rem;
-        padding: 0;
         cursor: pointer;
 
         &:hover,
@@ -79,13 +79,24 @@ body {
     }
 
     #SimpleGalleryViewerContainer {
-        margin: 1rem;
+        width: 100%;
+        min-height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+
+        background-color: var(--base-1);
 
         #SimpleGalleryViewerHeader {
-            width: calc(100% - (1rem * 2));
-            margin: 2rem 0 3rem;
+            padding: 1rem;
+            margin: 0;
+
+            background-color: var(--base-2);
+            border-bottom: 1px solid var(--base-1);
+            color: var(--base-3);
 
             h1 {
+                color: var(--base-4);
                 text-align: center;
                 font-size: 1.75rem;
                 line-height: 1.75rem;
@@ -93,6 +104,12 @@ body {
         }
 
         #SimpleGalleryViewerImages {
+            width: 100%;
+            flex: 1 0 auto;
+            margin: 0 auto;
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+
             & > p {
                 text-align: center;
                 margin-bottom: 1rem;
@@ -113,7 +130,25 @@ body {
         }
 
         #SimpleGalleryViewerFooter {
-            margin: 3rem 0 2rem;
+            padding: 1rem;
+            margin: 3rem 0 0;
+
+            background-color: var(--base-2);
+            border-bottom: 1px solid var(--base-1);
+            color: var(--base-3);
+        }
+
+        &.sticky-footer {
+            #SimpleGalleryViewerImages {
+                padding-bottom: 5rem;
+            }
+
+            #SimpleGalleryViewerFooter {
+                position: sticky;
+                bottom: 0;
+                width: 100%;
+                margin: auto 0 0;
+            }
         }
     }
 }
