@@ -1,28 +1,24 @@
-{
+
+
+export default {
   "type": "object",
-  "title": "Configuration",
   "properties": {
     "UUID": {
-      "type": "string",
-      "title": "Unique ID"
+      "type": "string"
     },
     "Name": {
       "type": "string",
-      "title": "Configuration Name",
       "minLength": 4
     },
     "Description": {
-      "type": "string",
-      "title": "Configuration Description"
+      "type": "string"
     },
     "Enabled": {
       "type": "boolean",
-      "title": "Enabled",
       "default": true
     },
     "ApplyToAllURLs": {
       "type": "boolean",
-      "title": "Apply to All URL(s)",
       "default": true
     },
     "URLs": {
@@ -31,7 +27,6 @@
         "type": "object",
         "properties": {
           "Pattern": {
-            "title": "URL Pattern",
             "type": "string"
           }
         },
@@ -39,12 +34,10 @@
       }
     },
     "ImageSelector": {
-      "type": "string",
-      "title": "Image(s) Selector"
+      "type": "string"
     },
     "TransformImageURLs": {
       "type": "boolean",
-      "title": "Transform Image URL(s)",
       "default": false
     },
     "Transformations": {
@@ -53,16 +46,13 @@
         "type": "object",
         "properties": {
           "Search": {
-            "title": "Search",
             "type": "string"
           },
           "SearchRegExp": {
-            "title": "Regular Expression",
             "type": "boolean",
             "default": false
           },
           "Replacement": {
-            "title": "Replacement",
             "type": "string"
           }
         },
@@ -71,4 +61,4 @@
     }
   },
   "required": ["Name", "UUID", "ImageSelector"]
-}
+};

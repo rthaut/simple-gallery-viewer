@@ -2,17 +2,43 @@
 
 import './edit.less';
 
+import schema from '../../schema/Config.schema.js';
+import form from '../../schema/Config.form.js';
+
 /* global angular */
 const app = angular.module('EditConfigurationApp', ['schemaForm', 'angular-uuid']);
 
-app.controller('EditConfigurationCtrl', ['$scope', 'uuid', function ($scope, uuid) {
-    $scope.schema = require('../../schema/Config.schema.json');
-    $scope.form = require('../../schema/Config.form.json');
+app.controller('EditConfigurationCtrl', ['$scope', '$sce', 'uuid', function ($scope, $sce, uuid) {
 
-    $scope.action = 'Create';
+    const labels = [
+        'ExtensionName',
+        'ConfigurationSavedHeading',
+        'ConfigurationSavedEditorInstructions',
+        'ContinueEditingButtonText',
+        'CloseEditorButtonText',
+    ];
+
+    $scope.labels = {};
+    labels.forEach(label => $scope.labels[label] = browser.i18n.getMessage(label));
+
+    $scope.schema = schema;
+    $scope.form = form;
+
+    $scope.title = browser.i18n.getMessage('CreateConfigTitle');
     $scope.model = {
         'UUID': uuid.v4()
     };
+
+    $scope.options = {
+        'formDefaults': {
+            // 'feedback': false,
+            'ngModelOptions': {
+                'debounce': 500
+            }
+        }
+    };
+
+    $scope.helpText = browser.i18n.getMessage('ConfigurationEditorHelpText', [`<a href="https://github.com/rthaut/simple-gallery-viewer/wiki">${browser.i18n.getMessage('ConfigurationWikiLinkText')}</a>`]);
 
     $scope.save = function (form) {
         $scope.$broadcast('schemaFormValidate');
@@ -27,11 +53,11 @@ app.controller('EditConfigurationCtrl', ['$scope', 'uuid', function ($scope, uui
             }).then(() => {
                 $('#successModal').modal('show');
             }).catch((error) => {
-                $scope.error = `Failed to save configuration (${error})`;
+                $scope.error = browser.i18n.getMessage('ConfigurationErrorPlaceholder', [error]);
                 $scope.$apply();
             });
         } else {
-            $scope.error = 'Configuration is not valid';
+            $scope.error = browser.i18n.getMessage('ConfigurationInvalid');
         }
     };
 
@@ -60,7 +86,7 @@ app.controller('EditConfigurationCtrl', ['$scope', 'uuid', function ($scope, uui
             });
 
             if (config !== undefined) {
-                $scope.action = 'Update';
+                $scope.title = browser.i18n.getMessage('UpdateConfigTitle');
                 $scope.model = angular.copy(config);
                 $scope.$apply();
             }
