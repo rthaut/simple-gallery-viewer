@@ -25,11 +25,12 @@ module.exports = {
                 ]
             },
             {
-                'test': /\.css$/,
-            },
-            {
                 'test': /\.html$/,
                 'loader': 'raw-loader'
+            },
+            {
+                'test': /.woff$|.woff2$|.ttf$|.eot$|.svg$/,
+                'loader': 'url-loader'
             }
         ]
     },
