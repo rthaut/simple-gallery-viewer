@@ -4,8 +4,10 @@ const Images = (() => {
 
     const Images = {
 
-        'get': function (config) {
-            console.log('[Content] Images.get()', config);
+        'get': function (config, root = document.body) {
+            console.log('[Content] Images.get()', config, root);
+
+            let images = [];
 
             if (config.Enabled) {
 
@@ -13,28 +15,54 @@ const Images = (() => {
                     // TODO: ensure the current URL matches one of the patterns in `config.URLs`
                 }
 
-                const nodes = document.querySelectorAll(config.ImageSelector);
-                console.log('[Content] Images.get() :: Nodes', nodes);
+                config.ImageSelectors.forEach((selector) => {
+                    console.log('[Content] Images.get() :: Selector', selector);
 
-                let images = [];
+                    selector.Images = [];
 
-                nodes.forEach(node => {
-                    if (node.hasAttribute('src')) {
-                        images.push(node.getAttribute('src'));
+                    const nodes = root.querySelectorAll(selector.Selector);
+                    console.log('[Content] Images.get() :: Selector : Nodes', nodes);
+
+                    nodes.forEach(node => {
+                        console.log(node.tagName);
+                        switch (node.tagName) {
+                            case 'IMG':
+                                if (node.hasAttribute('src')) {
+                                    selector.Images.push(node.getAttribute('src'));
+                                }
+                                break;
+                        }
+                    });
+
+                    if (selector.Images.length) {
+
+                        if (selector.Transform) {
+                            console.log('[Content] Images.get() :: Selector : Images (Before Transformations)', selector.Images);
+
+                            for (const transformation of selector.Transformations) {
+                                console.log('[Content] Images.get() :: Applying Transformation', transformation);
+
+                                const search = transformation.SearchRegExp ? new RegExp(transformation.Search) : transformation.Search;
+                                const replacement = transformation.Replacement || '';
+
+                                console.log('[Content] Images.get() :: Applying Transformation : Search', search);
+                                console.log('[Content] Images.get() :: Applying Transformation : Replacement', replacement);
+
+                                selector.Images = selector.Images.map(image => image.replace(search, replacement));
+                            }
+                        }
+
+                        console.log('[Content] Images.get() :: Selector : Images', selector.Images);
+                        images = images.concat(selector.Images);
+
                     }
+
                 });
 
-                if (config.TransformImageURLs) {
-                    for (const transformation of config.Transformations) {
-                        console.log('[Content] Images.get() :: Applying Transformation', transformation);
-                        const search = transformation.SearchRegExp ? new RegExp(transformation.Search) : transformation.Search;
-                        images = images.map(image => image.replace(search, transformation.Replacement));
-                    }
-                }
-
-                console.log('[Content] Images.get() :: Return', images);
-                return images;
             }
+
+            console.log('[Content] Images.get() :: Return', images);
+            return images;
         }
 
     };

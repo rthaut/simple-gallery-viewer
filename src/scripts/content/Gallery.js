@@ -2,46 +2,58 @@
 
 const Gallery = (() => {
 
-    const ID = 'SimpleGalleryViewer';   // @TODO: use `browser.runtime.id` instead? but then the CSS needs that same ID...
-
     const DEFAULT_THEME = 'Dark';
 
     const Gallery = {
+
+        'ID': 'SimpleGalleryViewer',    // @TODO: use `browser.runtime.id` instead? but then the CSS needs that same ID...
+
+        'isBuilt': false,
+
+        'isVisible': false,
+
+        'images': [],
 
         /**
          * Generates and inserts the core DOM structure for a gallery
          * @param {string} title The title of the gallery
          * @param {string} [description] The description of the gallery
+         * @returns {jQuery<HTMLElement>} The root gallery DOM element
          */
         'build': async function (title, description = null) {
             console.log('[Content] Gallery.build()', title, description);
 
-            let base = jQuery(`#${ID}`);
-
+            let base = jQuery(`#${this.ID}`);
             if (base !== undefined && base !== null && base.length) {
-                console.warn('[Content] Gallery.build() :: Container already exists', base);
+                console.warn('[Content] Gallery.build() :: Base Element Already Exists', base);
                 base.remove();
             }
 
             base = jQuery(`
-                <div id="${ID}">
-                    <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <div id="${ID}Container">
-                        <div id="${ID}Header">
+                <div id="${this.ID}">
+                    <div id="${this.ID}Container">
+                        <div id="${this.ID}Header">
                             <h1>${title || ''}</h1>
                             ${description ? '<p>' + description + '</p>' : ''}
                         </div>
-                        <div id="${ID}Images"></div>
-                        <div id="${ID}Footer"></div>
+                        <div id="${this.ID}Images"></div>
+                        <div id="${this.ID}Footer"></div>
                     </div>
                 </div>
-            `).appendTo('body');
+            `).hide().appendTo('body');
 
-            const container = base.find(`#${ID}Container`).first();
+            const container = base.find(`#${this.ID}Container`).first();
 
-            base.find('button.close').on('click', function (event) {
-                jQuery(`#${ID}`).remove();
-            });
+            let toggle = jQuery(`#${this.ID}Toggle`);
+            if (toggle !== undefined && toggle !== null && toggle.length) {
+                console.warn('[Content] Gallery.build() :: Toggle Button Already Exists', toggle);
+                toggle.remove();
+            }
+
+            toggle = jQuery(`<button type="button" id="${this.ID}Toggle" data-toggle="open"><span></span></button>`).appendTo('body');
+            toggle.on('click', jQuery.proxy(function (event) {
+                this.toggle(event);
+            }, this));
 
             // apply the theme and settings asynchronously after the main structure is built
             browser.storage.sync.get([
@@ -59,6 +71,58 @@ const Gallery = (() => {
                 container.toggleClass('preload-images', data.PreloadEnabled);
             });
 
+            this.isBuilt = true;
+
+            return base;
+        },
+
+        'toggle': function (event) {
+            console.log('[Content] Gallery.toggle()', event);
+
+            const toggle = jQuery(event.target);
+
+            if (this.isVisible) {
+                this.hide();
+                toggle.attr('data-toggle', 'open');
+            } else {
+                this.show();
+                toggle.attr('data-toggle', 'close');
+            }
+        },
+
+        /**
+         * Shows the root gallery DOM element
+         */
+        'show': function () {
+            console.log('[Content] Gallery.show()');
+
+            if (!this.isBuilt) {
+                this.build();
+            }
+
+            let base = jQuery(`#${this.ID}`);
+            if (base === undefined || base === null || !base.length) {
+                console.warn('[Content] Gallery.show() :: Base Element is Missing');
+                base = this.build();
+            }
+
+            base.show();
+
+            this.isVisible = true;
+        },
+
+        /**
+         * Hides the root gallery DOM element
+         */
+        'hide': function () {
+            console.log('[Content] Gallery.hide()');
+
+            const base = jQuery(`#${this.ID}`);
+            if (base !== undefined && base !== null && base.length) {
+                base.hide();
+            }
+
+            this.isVisible = false;
         },
 
         /**
@@ -68,16 +132,24 @@ const Gallery = (() => {
         'addImages': function(images) {
             console.log('[Content] Gallery.addImages()', images);
 
+            if (!this.isBuilt) {
+                this.build();
+            }
+
+            const container = jQuery(`#${this.ID}Images`);
+
             if (images !== undefined && images !== null && images.length) {
-                for (let i = 0; i < images.length; i++) {
-                    const img = jQuery(`#${ID}Images img[src="${images[i]}"]`);
+                for (const image of images) {
+                    const img = jQuery(`#${this.ID}Images img[src="${image}"]`);
 
                     if (img !== undefined && img !== null && img.length) {
-                        console.warn('[Content] Gallery.addImages() :: Image already exists', img.first());
+                        console.warn('[Content] Gallery.addImages() :: Image Already Exists', img.first());
                         continue;
                     }
 
-                    jQuery(`<p><a href="${images[i]}"><img src="${images[i]}"/></a></p>`).appendTo(`#${ID}Images`);
+                    jQuery(`<p id="#${this.ID}Image` + String('00000' + parseInt(container.find('img').length + 1)).slice(-5) + `"><a href="${image}"><img src="${image}"/></a></p>`).appendTo(`#${this.ID}Images`);
+
+                    this.images.push(image);
                 }
             }
         }

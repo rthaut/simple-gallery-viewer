@@ -29,8 +29,77 @@
     --base-4: #ffffff;
 }
 
-body {
-    position: relative;
+button#SimpleGalleryViewerToggle {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    padding: 0;
+    z-index: 10001;
+
+    background: black;
+    border: 0;
+    cursor: pointer;
+
+    width: 40px;
+    height: 40px;
+    border: 3px solid #CCCCCC;
+    border-radius: 100%;
+    box-shadow: 0 0 5px 0px #000000;
+
+    transition: 0.3s;
+
+    span {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        overflow: hidden;
+
+        &::before, &::after {
+            content: '';
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            top: 50%;
+            left: 0;
+            margin-top: -1px;
+            background: #CCCCCC;
+
+            transition: 0.4s;
+        }
+        &::before {
+            transform: rotate(0deg);
+        }
+        &::after {
+            transform: rotate(90deg);
+        }
+    }
+
+    &:hover,
+    &:focus {
+        color: #FFFFFF;
+        border-color: #FFFFFF;
+        text-decoration: none;
+        cursor: pointer;
+
+        span {
+            &::before, &::after {
+                background: #FFFFFF;
+            }
+        }
+    }
+
+    &[data-toggle="close"] {
+        span {
+            &::before {
+                transform: rotate(45deg);
+            }
+            &::after {
+                transform: rotate(-45deg);
+            }
+        }
+    }
 }
 
 #SimpleGalleryViewer {
@@ -53,30 +122,6 @@ body {
     line-height: 1rem;
     background-color: var(--base-1);
     color: var(--base-4);
-
-    button.close {
-        position: fixed;
-        top: 0;
-        right: 0;
-        margin: 1rem;
-        padding: 0;
-        z-index: 10001;
-
-        font-weight: bold;
-        font-size: 2rem;
-        line-height: 1rem;
-        background: transparent;
-        color: var(--base-3);
-        border: 0;
-        cursor: pointer;
-
-        &:hover,
-        &:focus {
-            color: var(--base-4);
-            text-decoration: none;
-            cursor: pointer;
-        }
-    }
 
     #SimpleGalleryViewerContainer {
         width: 100%;
