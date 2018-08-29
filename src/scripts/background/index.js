@@ -1,5 +1,3 @@
-/* eslint-env es6, webextensions */
-
 import Configs from './Configs';
 
 browser.runtime.onMessage.addListener((message, sender) => {

@@ -1,5 +1,3 @@
-/* eslint-env es6, webextensions */
-
 const Configs = (() => {
 
     const Configs = {

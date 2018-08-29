@@ -1,5 +1,3 @@
-/* eslint-env browser, es6, jquery, webextensions */
-
 const Gallery = (() => {
 
     const DEFAULT_THEME = 'Dark';

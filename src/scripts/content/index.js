@@ -1,5 +1,3 @@
-/* eslint-env browser, es6, jquery, webextensions */
-
 import Gallery from './Gallery';
 import Images from './Images';
 

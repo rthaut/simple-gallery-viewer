@@ -1,5 +1,3 @@
-/* eslint-env browser, es6, webextensions */
-
 const Images = (() => {
 
     const Images = {
