@@ -1,0 +1,53 @@
+{
+
+  "CreateConfigTitle": {
+    "message": "Create a New Configuration"
+  },
+
+  "UpdateConfigTitle": {
+    "message": "Update Existing Configuration"
+  },
+
+  "ConfigurationEditorHelpText": {
+    "message": "Need help creating a configuration? Check out $WIKI$ for guides and user-submitted configurations.",
+    "placeholders": {
+      "wiki": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "ConfigurationWikiLinkText": {
+    "message": "the Simply Gallery Viewer Wiki"
+  },
+
+  "ConfigurationSavedHeading": {
+    "message": "Configuration Saved Successfully"
+  },
+
+  "ConfigurationSavedEditorInstructions": {
+    "message": "<p>You may continue editing this configuration (<strong>don't forget to save additional changes</strong>), or you may safely close the editor now.<p>"
+  },
+
+  "ContinueEditingButtonText": {
+    "message": "Continue Editing"
+  },
+
+  "CloseEditorButtonText": {
+    "message": "Close the Editor Window"
+  },
+
+  "ConfigurationInvalid": {
+    "message": "This configuration is invalid; please correct the error(s) below."
+  },
+
+  "ConfigurationErrorPlaceholder": {
+    "message": "An error occurred while saving this configuration: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  }
+
+}
