@@ -2,6 +2,12 @@ const Images = (() => {
 
     const Images = {
 
+        /**
+         * Returns all image locations matching the supplied configuration object
+         * @param {Object} config A configuration object
+         * @param {HTMLElement} [root=document.body] The root DOM element to search within for images
+         * @returns {string[]} Array of matching image locations
+         */
         'get': function (config, root = document.body) {
             console.log('[Content] Images.get()', config, root);
 

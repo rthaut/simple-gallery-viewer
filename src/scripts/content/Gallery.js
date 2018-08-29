@@ -74,6 +74,10 @@ const Gallery = (() => {
             return base;
         },
 
+        /**
+         * Toggles the root gallery DOM element's visibility
+         * @param {event} event The click event
+         */
         'toggle': function (event) {
             console.log('[Content] Gallery.toggle()', event);
 
