@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>{{labels.ExtensionName}} - {{title}}</title>
+        <title>{{title}} - {{heading}}</title>
     </head>
 
     <body>
@@ -14,7 +14,7 @@
                 <div class="col-xs-12">
 
                     <div class="page-header">
-                        <h1>{{title}}</h1>
+                        <h1>{{heading}}</h1>
                         <h4 ng-bind-html="helpText"></h4>
                     </div>
 
@@ -39,12 +39,12 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">{{labels.ConfigurationSavedHeading}}</h4>
+                        <h4 class="modal-title" id="myModalLabel" get-message="ConfigurationSavedHeading"></h4>
                     </div>
-                    <div class="modal-body" ng-bind-html="labels.ConfigurationSavedEditorInstructions"></div>
+                    <div class="modal-body" get-message="ConfigurationSavedEditorInstructions"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">{{labels.ContinueEditingButtonText}}</button>
-                        <button type="button" class="btn btn-primary" id="close">{{labels.CloseEditorButtonText}}</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" get-message="ContinueEditingButtonText"></button>
+                        <button type="button" class="btn btn-primary" id="close" get-message="CloseEditorButtonText"></button>
                     </div>
                 </div>
             </div>
@@ -53,6 +53,7 @@
         <!-- dependencies -->
         <script type="application/javascript" src="../../vendor/jquery.min.js"></script>
         <script type="application/javascript" src="../../vendor/angular.min.js"></script>
+        <script type="application/javascript" src="../../vendor/angular-browser-i18n.min.js"></script>
         <script type="application/javascript" src="../../vendor/angular-sanitize.min.js"></script>
         <script type="application/javascript" src="../../vendor/angular-uuid.js"></script>
         <script type="application/javascript" src="../../vendor/bootstrap.min.js"></script>

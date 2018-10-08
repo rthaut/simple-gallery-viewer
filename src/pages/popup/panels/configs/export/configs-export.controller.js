@@ -3,17 +3,9 @@ export default class ConfigsExportController {
     constructor($scope) {
         this.scope = $scope;
 
+        this.scope.heading = browser.i18n.getMessage('ExportConfigsHeading');
+
         this.LoadConfigs();
-
-        const labels = [
-            'ExportConfigsHeading',
-            'ExportButtonLabel',
-            'ExportSelectAll',
-            'ExportDeselectAll',
-        ];
-
-        this.scope.labels = {};
-        labels.forEach(label => this.scope.labels[label] = browser.i18n.getMessage(label));
     }
 
     async LoadConfigs() {
@@ -87,7 +79,7 @@ export default class ConfigsExportController {
             });
         }).finally(() => {
             $event.target.removeAttribute('disabled');
-            $event.target.textContent = this.scope.labels.ExportButtonLabel;
+            $event.target.textContent = browser.i18n.getMessage('ExportButtonLabel');
             this.scope.$apply();
         });
     }

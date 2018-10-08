@@ -8,7 +8,7 @@ import PopupController from './popup.controller';
 import panelHeader from './directives/panel-header/panel-header.directive';
 
 /* global angular */
-const app = angular.module('SimpleGalleryViewer.Popup', ['ngRoute', 'ngAnimate', panelHeader]);
+const app = angular.module('SimpleGalleryViewer.Popup', ['ngRoute', 'ngAnimate', 'browser.i18n', panelHeader]);
 
 app.config(config);
 

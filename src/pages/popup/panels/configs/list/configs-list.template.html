@@ -1,21 +1,21 @@
-<panel-header back-button-path="/" header-text="{{labels.ManageConfigsHeading}}"></panel-header>
+<panel-header back-button-path="/" header-text="{{heading}}"></panel-header>
 
 <div class="panel-section panel-section-body">
 
     <div class="panel-section panel-section-list">
 
         <a class="panel-list-item" ng-click="ctrl.EditConfig()">
-            <div class="text">{{labels.CreateConfigHeading}}</div>
+            <div class="text" get-message="CreateConfigHeading"></div>
             <div class="icon plus"></div>
         </a>
 
         <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/configs/import'})">
-            <div class="text">{{labels.ImportConfigsHeading}}</div>
+            <div class="text" get-message="ImportConfigsHeading"></div>
             <div class="icon arrow-right"></div>
         </a>
 
         <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/configs/export'})">
-            <div class="text">{{labels.ExportConfigsHeading}}</div>
+            <div class="text" get-message="ExportConfigsHeading"></div>
             <div class="icon arrow-right"></div>
         </a>
 

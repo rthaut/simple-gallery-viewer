@@ -3,18 +3,9 @@ export default class MainController {
     constructor($scope) {
         this.scope = $scope;
 
+        this.scope.heading = browser.i18n.getMessage('ExtensionName');
+
         this.GetSettings();
-
-        const labels = [
-            'ExtensionName',
-            'ManageConfigsHeading',
-            'OptionsHeading',
-            'HelpHeading',
-            'AboutHeading',
-        ];
-
-        this.scope.labels = {};
-        labels.forEach(label => this.scope.labels[label] = browser.i18n.getMessage(label));
     }
 
     async GetSettings() {

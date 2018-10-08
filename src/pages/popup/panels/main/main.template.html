@@ -1,18 +1,18 @@
-<panel-header header-icon="../../images/logo-32.png" header-text="{{labels.ExtensionName}}"></panel-header>
+<panel-header header-icon="../../images/logo-32.png" header-text="{{heading}}"></panel-header>
 
 <div class="panel-section panel-section-body">
 
     <div class="panel-section panel-section-list">
 
         <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/configs/list'})">
-            <div class="text">{{labels.ManageConfigsHeading}}</div>
+            <div class="text" get-message="ManageConfigsHeading"></div>
             <div class="icon arrow-right"></div>
         </a>
 
         <div class="panel-section-separator"></div>
 
         <div class="panel-list-item disabled">
-            <div class="text text-muted">{{labels.OptionsHeading}}</div>
+            <div class="text text-muted" get-message="OptionsHeading"></div>
         </div>
 
         <div class="panel-list-item" ng-repeat="setting in settings">
@@ -27,12 +27,12 @@
         <div class="panel-section-separator"></div>
 
         <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/help'})">
-            <div class="text">{{labels.HelpHeading}}</div>
+            <div class="text" get-message="HelpHeading"></div>
             <div class="icon arrow-right"></div>
         </a>
 
         <a class="panel-list-item" ng-click="$emit('ChangePanel', {'direction': 'right', 'path': '/about'})">
-            <div class="text">{{labels.AboutHeading}}</div>
+            <div class="text" get-message="AboutHeading"></div>
             <div class="icon arrow-right"></div>
         </a>
 

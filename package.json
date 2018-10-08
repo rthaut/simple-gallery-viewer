@@ -26,6 +26,7 @@
   "dependencies": {
     "angular": "^1.7.2",
     "angular-animate": "^1.7.3",
+    "angular-browser-i18n": "^2.0.1",
     "angular-route": "^1.7.3",
     "angular-sanitize": "^1.7.2",
     "angular-schema-form": "0.8.13",

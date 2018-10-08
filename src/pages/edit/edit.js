@@ -6,25 +6,16 @@ import schema from '../../schema/Config.schema.js';
 import form from '../../schema/Config.form.js';
 
 /* global angular */
-const app = angular.module('EditConfigurationApp', ['schemaForm', 'angular-uuid']);
+const app = angular.module('EditConfigurationApp', ['schemaForm', 'angular-uuid', 'browser.i18n']);
 
 app.controller('EditConfigurationCtrl', ['$scope', '$sce', 'uuid', function ($scope, $sce, uuid) {
 
-    const labels = [
-        'ExtensionName',
-        'ConfigurationSavedHeading',
-        'ConfigurationSavedEditorInstructions',
-        'ContinueEditingButtonText',
-        'CloseEditorButtonText',
-    ];
-
-    $scope.labels = {};
-    labels.forEach(label => $scope.labels[label] = browser.i18n.getMessage(label));
+    $scope.title = browser.i18n.getMessage('ExtensionName');
 
     $scope.schema = schema;
     $scope.form = form;
 
-    $scope.title = browser.i18n.getMessage('CreateConfigTitle');
+    $scope.heading = browser.i18n.getMessage('CreateConfigTitle');
     $scope.model = {
         'UUID': uuid.v4()
     };

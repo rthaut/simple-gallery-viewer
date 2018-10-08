@@ -3,17 +3,9 @@ export default class ConfigsListController {
     constructor($scope) {
         this.scope = $scope;
 
+        this.scope.heading = browser.i18n.getMessage('ManageConfigsHeading');
+
         this.GetConfigs();
-
-        const labels = [
-            'ManageConfigsHeading',
-            'CreateConfigHeading',
-            'ExportConfigsHeading',
-            'ImportConfigsHeading',
-        ];
-
-        this.scope.labels = {};
-        labels.forEach(label => this.scope.labels[label] = browser.i18n.getMessage(label));
     }
 
     async GetConfigs() {

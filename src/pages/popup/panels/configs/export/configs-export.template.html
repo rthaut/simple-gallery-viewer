@@ -1,12 +1,12 @@
-<panel-header back-button-path="/configs/list" header-text="{{labels.ExportConfigsHeading}}"></panel-header>
+<panel-header back-button-path="/configs/list" header-text="{{heading}}"></panel-header>
 
 <div class="panel-section panel-section-body">
 
     <div class="panel-section panel-section-content">
 
         <p>
-            <a class="link" ng-click="ctrl.SelectAll()">{{labels.ExportSelectAll}}</a>,
-            <a class="link" ng-click="ctrl.DeselectAll()">{{labels.ExportDeselectAll}}</a>
+            <a class="link" ng-click="ctrl.SelectAll()" get-message="ExportSelectAll"></a>,
+            <a class="link" ng-click="ctrl.DeselectAll()" get-message="ExportDeselectAll"></a>
         </p>
 
         <form>
@@ -17,7 +17,7 @@
             </div>
 
             <br/>
-            <button type="button" class="btn btn-primary" ng-click="ctrl.ExportConfigs($event)" ng-disabled="!ctrl.ExportButtonEnabled()">{{labels.ExportButtonLabel}}</button>
+            <button type="button" class="btn btn-primary" ng-click="ctrl.ExportConfigs($event)" ng-disabled="!ctrl.ExportButtonEnabled()" get-message="ExportButtonLabel"></button>
         </form>
 
     </div>
